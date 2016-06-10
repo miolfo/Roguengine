@@ -1,4 +1,4 @@
-package com.miolfo.mapgenerator;
+package com.miolfo.gamelogic;
 /**
  * Created by Mikko Forsman on 30.5.2016.
  */

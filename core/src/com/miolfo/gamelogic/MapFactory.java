@@ -1,4 +1,4 @@
-package com.miolfo.mapgenerator;
+package com.miolfo.gamelogic;
 
 import java.util.Random;
 
@@ -132,7 +132,6 @@ public class MapFactory {
         Random r = new Random();
         int rrx = 0, rry = 0;
         int rndAsInt = Math.round(radius * randomness);
-        System.out.println(rndAsInt);
         if(randomness != 0) {
             rrx = r.nextInt(rndAsInt);
             rry = r.nextInt(rndAsInt);
