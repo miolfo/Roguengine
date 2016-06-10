@@ -1,5 +1,4 @@
-package MapGenerator;
-
+package com.miolfo.mapgenerator;
 /**
  * Created by Mikko Forsman on 30.5.2016.
  */

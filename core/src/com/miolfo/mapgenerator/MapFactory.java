@@ -1,4 +1,4 @@
-package MapGenerator;
+package com.miolfo.mapgenerator;
 
 import java.util.Random;
 
