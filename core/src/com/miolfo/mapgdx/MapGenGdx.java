@@ -1,6 +1,5 @@
 package com.miolfo.mapgdx;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -14,7 +13,8 @@ public class MapGenGdx extends Game {
 	SpriteBatch batch;
 	ShapeRenderer shapeRenderer;
 	GameMap map;
-	Texture grass, forest, snow, desert;
+	Player player;
+	Texture grass_t, forest_t, snow_t, desert_t, player_t;
 
 	//Map parameters
 	int tileWidthPx, tileHeightPx, mapSize;
@@ -24,10 +24,11 @@ public class MapGenGdx extends Game {
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setAutoShapeType(true);
-		grass = new Texture("grass64.png");
-		forest = new Texture("forest64.png");
-		snow = new Texture("snow64.png");
-		desert = new Texture("desert64.png");
+		grass_t = new Texture("grass64.png");
+		forest_t = new Texture("forest64.png");
+		snow_t = new Texture("snow64.png");
+		desert_t = new Texture("desert64.png");
+		player_t = new Texture("player64.png");
 		MapFactory mf = new MapFactory().MapSize(32).NoOfForests(3).SizeOfForests(3);
 		map = mf.Generate();
 		mapSize = map.GetSize();
@@ -36,6 +37,9 @@ public class MapGenGdx extends Game {
 		int h = Gdx.graphics.getHeight();
 		tileWidthPx =  w / mapSize;
 		tileHeightPx = h / mapSize;
+
+		player = new Player();
+		player.SetTexture(player_t);
 	}
 
 	@Override
@@ -49,6 +53,7 @@ public class MapGenGdx extends Game {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		renderMap();
+		renderPlayer();
 	}
 
 	public void renderMap(){
@@ -63,16 +68,16 @@ public class MapGenGdx extends Game {
 				batch.begin();
 				switch(t){
 					case TILE_DESERT:
-						batch.draw(desert, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
+						batch.draw(desert_t, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
 						break;
 					case TILE_FOREST:
-						batch.draw(forest, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
+						batch.draw(forest_t, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
 						break;
 					case TILE_GRASS:
-						batch.draw(grass, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
+						batch.draw(grass_t, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
 						break;
 					case TILE_SNOW:
-						batch.draw(snow, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
+						batch.draw(snow_t, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
 						break;
 					default:
 						shapeRenderer.setColor(Color.WHITE);
@@ -82,5 +87,14 @@ public class MapGenGdx extends Game {
 			}
 		}
 		shapeRenderer.end();
+	}
+
+	private void renderPlayer(){
+		batch.begin();
+		batch.draw(player.GetTexture(), player.GetPosition().X() * tileWidthPx,
+				player.GetPosition().Y() * tileHeightPx,
+				tileWidthPx,
+				tileHeightPx);
+		batch.end();
 	}
 }

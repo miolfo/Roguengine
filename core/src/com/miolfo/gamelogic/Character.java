@@ -1,11 +1,14 @@
 package com.miolfo.gamelogic;
 
+import com.badlogic.gdx.graphics.Texture;
+
 /**
  * Created by Mikko Forsman on 6/13/16.
  */
 public abstract class Character {
     private Position mPosition;
     private String mName;
+    private Texture mTexture;
     private int mId;
 
     public Character(String name){
@@ -21,8 +24,12 @@ public abstract class Character {
         return mName;
     }
 
+    public Position GetPosition(){
+        return mPosition;
+    }
+
     public void Move(Position.MoveDirection dir){
-        mPosition.Move(dir, 1);
+        mPosition.Move(dir);
     }
 
     public void Move(Position.MoveDirection dir, int distance){
@@ -33,5 +40,11 @@ public abstract class Character {
         mPosition = newPos;
     }
 
+    public void SetTexture(Texture texture){
+        mTexture = texture;
+    }
 
+    public Texture GetTexture(){
+        return mTexture;
+    }
 }
