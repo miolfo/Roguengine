@@ -3,7 +3,7 @@ package com.miolfo.gamelogic;
  * Created by Mikko Forsman on 30.5.2016.
  */
 public enum Tile {
-    TILE_GRASS, TILE_FOREST, TILE_MOUNTAIN, TILE_WATER, TILE_SNOW, TILE_DESERT;
+    TILE_GRASS, TILE_FOREST, TILE_MOUNTAIN, TILE_WATER, TILE_SNOW, TILE_DESERT, TILE_UNDEFINED;
 
     @Override
     public String toString() {
@@ -14,6 +14,7 @@ public enum Tile {
             case TILE_WATER: return "Water";
             case TILE_SNOW: return "Snow";
             case TILE_DESERT: return "Desert";
+            case TILE_UNDEFINED: return "N/A";
             default: throw new IllegalArgumentException();
         }
     }

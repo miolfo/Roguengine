@@ -37,7 +37,9 @@ public class GameMap {
      * @return tile at x,y
      */
     public Tile GetTile(int x, int y){
-        return map[y][x];
+        if(x < map.length && y < map.length && x >= 0 && y >= 0) {
+            return map[y][x];
+        } else return Tile.TILE_UNDEFINED;
     }
 
 
