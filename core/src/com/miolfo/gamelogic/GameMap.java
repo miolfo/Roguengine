@@ -42,6 +42,15 @@ public class GameMap {
         } else return Tile.TILE_UNDEFINED;
     }
 
+    /**
+     *
+     * @param pos pos
+     * @return tile at pos.x, pos.y
+     */
+    public Tile GetTile(Position pos){
+        return GetTile(pos.X(), pos .Y());
+    }
+
 
     /**
      *
@@ -54,6 +63,10 @@ public class GameMap {
         if(x < map.length && y < map.length && x >= 0 && y >= 0) {
             map[y][x] = t;
         }
+    }
+
+    public void SetTile(Position pos, Tile t){
+        SetTile(pos.X(), pos.Y(), t);
     }
 
     /**

@@ -28,7 +28,7 @@ public class MapGenGdx extends Game {
 		forest = new Texture("forest64.png");
 		snow = new Texture("snow64.png");
 		desert = new Texture("desert64.png");
-		MapFactory mf = new MapFactory().MapSize(80).NoOfForests(10).SizeOfForests(10);
+		MapFactory mf = new MapFactory().MapSize(32).NoOfForests(3).SizeOfForests(3);
 		map = mf.Generate();
 		mapSize = map.GetSize();
 		//TODO: Dynamically get screen size
@@ -52,10 +52,13 @@ public class MapGenGdx extends Game {
 	}
 
 	public void renderMap(){
-		//Determine the size of single tile
+		renderPartialMap(0, mapSize, 0, mapSize);
+	}
+
+	private void renderPartialMap(int xMin, int xMax, int yMin, int yMax){
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-		for(int i = 0; i < mapSize; i++){
-			for(int j = 0; j < mapSize; j++){
+		for(int i = xMin; i < xMax; i++){
+			for(int j = yMin; j < yMax; j++){
 				Tile t = map.GetTile(i,j);
 				batch.begin();
 				switch(t){
@@ -75,7 +78,7 @@ public class MapGenGdx extends Game {
 						shapeRenderer.setColor(Color.WHITE);
 						break;
 				}
-					batch.end();
+				batch.end();
 			}
 		}
 		shapeRenderer.end();
