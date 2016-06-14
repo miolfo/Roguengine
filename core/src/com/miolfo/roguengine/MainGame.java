@@ -49,6 +49,11 @@ public class MainGame extends Game {
         renderPlayer();
     }
 
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        mapGdx.resize();
+    }
 
     private void renderPlayer(){
         batch.begin();

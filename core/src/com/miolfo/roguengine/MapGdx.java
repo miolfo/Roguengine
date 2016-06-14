@@ -17,7 +17,7 @@ import com.miolfo.gamelogic.Tile;
 /**
  * Class to handle all the operations that have to do with the map of the game
  */
-public class MapGdx extends Game {
+public class MapGdx{
 
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
@@ -25,9 +25,9 @@ public class MapGdx extends Game {
     private Texture grass_t, forest_t, snow_t, desert_t;
 
     //Map parameters
-    private int tileWidthPx, tileHeightPx, mapSize;
+    private int tileWidthPx, tileHeightPx, mapSize, screenHeight, screenWidth;
+    private int mapVisibilityWidth, mapVisibilityHeight;
 
-    @Override
     public void create() {
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
@@ -37,20 +37,24 @@ public class MapGdx extends Game {
         MapFactory mf = new MapFactory().MapSize(100).NoOfForests(8).SizeOfForests(8);
         map = mf.Generate();
         mapSize = map.GetSize();
-        int w = Gdx.graphics.getWidth();
-        int h = Gdx.graphics.getHeight();
-        tileWidthPx =  w / mapSize;
-        tileHeightPx = h / mapSize;
+        screenWidth = Gdx.graphics.getWidth();
+        screenHeight = Gdx.graphics.getHeight();
+        tileWidthPx =  screenWidth / mapSize;
+        tileHeightPx = screenHeight / mapSize;
+        determineVisibleMapArea();
     }
 
-    @Override
     public void render() {
-        super.render();
         renderMap();
     }
 
+    public void resize(){
+        screenWidth = Gdx.graphics.getWidth();
+        screenHeight = Gdx.graphics.getHeight();
+    }
+
     public void renderMap(){
-        renderPartialMap(0, mapSize, 0, mapSize);
+        renderPartialMap(0, mapVisibilityWidth, 0, mapVisibilityHeight);
     }
 
     public int GetMapSize(){
@@ -66,6 +70,8 @@ public class MapGdx extends Game {
     }
 
     private void renderPartialMap(int xMin, int xMax, int yMin, int yMax){
+        tileWidthPx = screenWidth / (xMax - xMin);
+        tileHeightPx = screenHeight / (yMax - yMin);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         for(int i = xMin; i < xMax; i++){
             for(int j = yMin; j < yMax; j++){
@@ -101,7 +107,19 @@ public class MapGdx extends Game {
         desert_t = new Texture("desert64.png");
     }
 
+    /**
+     * Determine the zoom level of the map according to the screen size
+     */
     private void determineVisibleMapArea(){
-
+        int visibilityw = 32, visibilityh = 32;
+        while(screenWidth % visibilityw != 0){
+            visibilityw++;
+        }
+        while(screenHeight % visibilityh != 0){
+            visibilityh++;
+        }
+        mapVisibilityWidth = visibilityw;
+        mapVisibilityHeight = visibilityh;
+        System.out.println("Visibility set to " + visibilityw + "," + visibilityh);
     }
 }
