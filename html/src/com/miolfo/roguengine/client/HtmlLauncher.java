@@ -1,9 +1,9 @@
-package com.miolfo.mapgdx.client;
+package com.miolfo.roguengine.client;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.miolfo.mapgdx.MapGenGdx;
+import com.miolfo.roguengine.RoguEngine;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -14,6 +14,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new MapGenGdx();
+                return new RoguEngine();
         }
 }

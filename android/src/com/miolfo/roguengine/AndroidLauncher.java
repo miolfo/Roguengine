@@ -1,4 +1,4 @@
-package com.miolfo.mapgdx;
+package com.miolfo.roguengine;
 
 import android.os.Bundle;
 import com.badlogic.gdx.backends.android.AndroidApplication;
@@ -9,6 +9,6 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new MapGenGdx(), config);
+		initialize(new RoguEngine(), config);
 	}
 }
