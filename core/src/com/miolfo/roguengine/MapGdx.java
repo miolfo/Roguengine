@@ -32,8 +32,9 @@ public class MapGdx extends Game {
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
+        loadTextures();
 
-        MapFactory mf = new MapFactory().MapSize(32).NoOfForests(3).SizeOfForests(3);
+        MapFactory mf = new MapFactory().MapSize(100).NoOfForests(8).SizeOfForests(8);
         map = mf.Generate();
         mapSize = map.GetSize();
         int w = Gdx.graphics.getWidth();
@@ -98,5 +99,9 @@ public class MapGdx extends Game {
         forest_t = new Texture("forest64.png");
         snow_t = new Texture("snow64.png");
         desert_t = new Texture("desert64.png");
+    }
+
+    private void determineVisibleMapArea(){
+
     }
 }

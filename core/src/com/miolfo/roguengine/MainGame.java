@@ -21,13 +21,16 @@ public class MainGame extends Game {
     Texture player_t;
     MapGdx mapGdx;
 
+    public MainGame(){
+        create();
+    }
+
     @Override
     public void create() {
         batch = new SpriteBatch();
         player = new Player();
         player_t = new Texture("player64.png");
         player.SetTexture(player_t);
-        player.Move(new Position(30,30));
         mapGdx = new MapGdx();
         mapGdx.create();
     }
@@ -37,13 +40,13 @@ public class MainGame extends Game {
         super.dispose();
         batch.dispose();
         shapeRenderer.dispose();
-        mapGdx.render();
-        renderPlayer();
     }
 
     @Override
     public void render() {
         super.render();
+        mapGdx.render();
+        renderPlayer();
     }
 
 
