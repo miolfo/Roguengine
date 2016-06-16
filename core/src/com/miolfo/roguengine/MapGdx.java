@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.miolfo.gamelogic.GameMap;
 import com.miolfo.gamelogic.MapFactory;
+import com.miolfo.gamelogic.Position;
 import com.miolfo.gamelogic.Tile;
 
 /**
@@ -19,7 +20,6 @@ import com.miolfo.gamelogic.Tile;
  */
 public class MapGdx{
 
-    private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
     private GameMap map;
     private Texture grass_t, forest_t, snow_t, desert_t;
@@ -29,7 +29,6 @@ public class MapGdx{
     private int mapVisibilityWidth, mapVisibilityHeight;
 
     public void create() {
-        batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
         loadTextures();
@@ -44,21 +43,43 @@ public class MapGdx{
         determineVisibleMapArea();
     }
 
-    public void render() {
+    /*public void render() {
         renderMap();
-    }
+    }*/
 
     public void resize(){
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
+        determineVisibleMapArea();
     }
 
-    public void renderMap(){
-        renderPartialMap(0, mapVisibilityWidth, 0, mapVisibilityHeight);
+    public void renderWholeMap(){
+        renderPartialMap(0, mapSize, 0, mapSize);
+    }
+
+    /**
+     * Render a partial map around certain position
+     * map size determined by mapVisibilityWidth and mapVisibilityHeight
+     * @param pos
+     */
+    public void renderAroundPos(Position pos){
+        renderPartialMap(pos.X() - mapVisibilityWidth / 2,
+                pos.X() + mapVisibilityWidth / 2,
+                pos.Y() - mapVisibilityHeight / 2,
+                pos.Y() + mapVisibilityHeight / 2);
+        //System.out.println("Rendered from " + (pos.X() - mapVisibilityWidth / 2) + "to " + (pos.X() + mapVisibilityWidth / 2));
     }
 
     public int GetMapSize(){
         return mapSize;
+    }
+
+    public int GetMapWidthPixels(){
+        return screenWidth;
+    }
+
+    public int GetMapHeightPixels(){
+        return screenHeight;
     }
 
     public int GetTileWidthPixels(){
@@ -73,28 +94,28 @@ public class MapGdx{
         tileWidthPx = screenWidth / (xMax - xMin);
         tileHeightPx = screenHeight / (yMax - yMin);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        for(int i = xMin; i < xMax; i++){
-            for(int j = yMin; j < yMax; j++){
-                Tile t = map.GetTile(i,j);
-                batch.begin();
+        for(int i = 0; i < (xMax - xMin); i++){
+            for(int j = 0; j < (yMax - yMin); j++){
+                Tile t = map.GetTile(i+xMin,j+yMin);
+                MainGame.SpriteBatchInstance().begin();
                 switch(t){
                     case TILE_DESERT:
-                        batch.draw(desert_t, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
+                        MainGame.SpriteBatchInstance().draw(desert_t, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
                         break;
                     case TILE_FOREST:
-                        batch.draw(forest_t, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
+                        MainGame.SpriteBatchInstance().draw(forest_t, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
                         break;
                     case TILE_GRASS:
-                        batch.draw(grass_t, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
+                        MainGame.SpriteBatchInstance().draw(grass_t, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
                         break;
                     case TILE_SNOW:
-                        batch.draw(snow_t, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
+                        MainGame.SpriteBatchInstance().draw(snow_t, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
                         break;
                     default:
                         shapeRenderer.setColor(Color.WHITE);
                         break;
                 }
-                batch.end();
+                MainGame.SpriteBatchInstance().end();
             }
         }
         shapeRenderer.end();
@@ -120,6 +141,5 @@ public class MapGdx{
         }
         mapVisibilityWidth = visibilityw;
         mapVisibilityHeight = visibilityh;
-        System.out.println("Visibility set to " + visibilityw + "," + visibilityh);
     }
 }

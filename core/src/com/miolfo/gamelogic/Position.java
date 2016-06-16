@@ -49,6 +49,11 @@ public class Position {
         }
     }
 
+    @Override
+    public String toString(){
+        return this.x + ", " + this.y;
+    }
+
     public enum MoveDirection{
         NORTH, SOUTH, EAST, WEST
     }

@@ -15,11 +15,15 @@ import com.miolfo.gamelogic.Position;
  * Main gdx logic of the game
  */
 public class MainGame extends Game {
-    SpriteBatch batch;
+    static SpriteBatch batch;
     ShapeRenderer shapeRenderer;
     Player player;
     Texture player_t;
     MapGdx mapGdx;
+
+    public static SpriteBatch SpriteBatchInstance(){
+        return batch;
+    }
 
     public MainGame(){
         create();
@@ -33,6 +37,8 @@ public class MainGame extends Game {
         player.SetTexture(player_t);
         mapGdx = new MapGdx();
         mapGdx.create();
+        player.Move(new Position(mapGdx.GetMapSize() / 2, mapGdx.GetMapSize() / 2));
+        System.out.println("Player set to " + player.GetPosition());
     }
 
     @Override
@@ -45,9 +51,11 @@ public class MainGame extends Game {
     @Override
     public void render() {
         super.render();
-        mapGdx.render();
+        mapGdx.renderAroundPos(player.GetPosition());
+        //mapGdx.renderWholeMap();
         renderPlayer();
     }
+
 
     @Override
     public void resize(int width, int height) {
@@ -57,8 +65,9 @@ public class MainGame extends Game {
 
     private void renderPlayer(){
         batch.begin();
-        batch.draw(player.GetTexture(), player.GetPosition().X() * mapGdx.GetTileWidthPixels(),
-                player.GetPosition().Y() * mapGdx.GetTileHeightPixels(),
+        batch.draw(player.GetTexture(),
+                mapGdx.GetMapWidthPixels() / 2,
+                mapGdx.GetMapHeightPixels() / 2,
                 mapGdx.GetTileWidthPixels(),
                 mapGdx.GetTileHeightPixels());
         batch.end();
