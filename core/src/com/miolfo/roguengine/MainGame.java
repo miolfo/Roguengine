@@ -3,7 +3,6 @@ package com.miolfo.roguengine;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.miolfo.gamelogic.Player;
 import com.miolfo.gamelogic.Position;
 
@@ -15,15 +14,18 @@ import com.miolfo.gamelogic.Position;
  * Main gdx logic of the game
  */
 public class MainGame extends Game {
-    static SpriteBatch batch;
-    ShapeRenderer shapeRenderer;
-    Player player;
-    Texture player_t;
-    MapGdx mapGdx;
-    BasicUi mBasicUi;
+    private static SpriteBatch mBatch;
+    private static Player mPlayer;
+    private Texture mPlayer_t;
+    private MapGdx mMapGdx;
+    private BasicUi mBasicUi;
 
     public static SpriteBatch SpriteBatchInstance(){
-        return batch;
+        return mBatch;
+    }
+
+    public static Player GetPlayer(){
+        return mPlayer;
     }
 
     public MainGame(){
@@ -32,14 +34,14 @@ public class MainGame extends Game {
 
     @Override
     public void create() {
-        batch = new SpriteBatch();
-        player = new Player();
-        player_t = new Texture("player64.png");
-        player.SetTexture(player_t);
-        mapGdx = new MapGdx();
-        mapGdx.create();
-        player.Move(new Position(mapGdx.GetMapSize() / 2, mapGdx.GetMapSize() / 2));
-        System.out.println("Player set to " + player.GetPosition());
+        mBatch = new SpriteBatch();
+        mPlayer = new Player();
+        mPlayer_t = new Texture("player64.png");
+        mPlayer.SetTexture(mPlayer_t);
+        mMapGdx = new MapGdx();
+        mMapGdx.create();
+        mPlayer.Move(new Position(mMapGdx.GetMapSize() / 2, mMapGdx.GetMapSize() / 2));
+        System.out.println("Player set to " + mPlayer.GetPosition());
 
         mBasicUi = new BasicUi();
         mBasicUi.create();
@@ -48,15 +50,14 @@ public class MainGame extends Game {
     @Override
     public void dispose() {
         super.dispose();
-        batch.dispose();
-        shapeRenderer.dispose();
+        mBatch.dispose();
     }
 
     @Override
     public void render() {
         super.render();
-        mapGdx.renderAroundPos(player.GetPosition());
-        //mapGdx.renderWholeMap();
+        mMapGdx.renderAroundPos(mPlayer.GetPosition());
+        //mMapGdx.renderWholeMap();
         renderPlayer();
         mBasicUi.render();
     }
@@ -65,16 +66,16 @@ public class MainGame extends Game {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        mapGdx.resize();
+        mMapGdx.resize();
     }
 
     private void renderPlayer(){
-        batch.begin();
-        batch.draw(player.GetTexture(),
-                mapGdx.GetMapWidthPixels() / 2,
-                mapGdx.GetMapHeightPixels() / 2,
-                mapGdx.GetTileWidthPixels(),
-                mapGdx.GetTileHeightPixels());
-        batch.end();
+        mBatch.begin();
+        mBatch.draw(mPlayer.GetTexture(),
+                mMapGdx.GetMapWidthPixels() / 2,
+                mMapGdx.GetMapHeightPixels() / 2,
+                mMapGdx.GetTileWidthPixels(),
+                mMapGdx.GetTileHeightPixels());
+        mBatch.end();
     }
 }
