@@ -20,6 +20,7 @@ public class MainGame extends Game {
     Player player;
     Texture player_t;
     MapGdx mapGdx;
+    BasicUi mBasicUi;
 
     public static SpriteBatch SpriteBatchInstance(){
         return batch;
@@ -39,6 +40,9 @@ public class MainGame extends Game {
         mapGdx.create();
         player.Move(new Position(mapGdx.GetMapSize() / 2, mapGdx.GetMapSize() / 2));
         System.out.println("Player set to " + player.GetPosition());
+
+        mBasicUi = new BasicUi();
+        mBasicUi.create();
     }
 
     @Override
@@ -54,6 +58,7 @@ public class MainGame extends Game {
         mapGdx.renderAroundPos(player.GetPosition());
         //mapGdx.renderWholeMap();
         renderPlayer();
+        mBasicUi.render();
     }
 
 
