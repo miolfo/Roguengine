@@ -14,12 +14,14 @@ import com.miolfo.gamelogic.Tile;
  */
 
 /**
- * Class to handle all the operations that have to do with the map of the game
+ * Class to handle all the operations that have to do with the maps of the game
  */
 public class MapGdx{
 
-    private ShapeRenderer shapeRenderer;
-    private GameMap map;
+    private static MapGdx instance;
+
+    private static ShapeRenderer shapeRenderer;
+    private GameMap worldMap;
     private Texture grass_t, forest_t, snow_t, desert_t;
 
     //Map parameters
@@ -31,14 +33,21 @@ public class MapGdx{
         create();
     }
 
+    public static MapGdx Instance(){
+        if(instance == null){
+            instance = new MapGdx();
+        }
+        return instance;
+    }
+
     public void create() {
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
         loadTextures();
 
         MapFactory mf = new MapFactory().MapSize(100).NoOfForests(8).SizeOfForests(8);
-        map = mf.Generate();
-        mapSize = map.GetSize();
+        worldMap = mf.Generate();
+        mapSize = worldMap.GetSize();
         screenWidthPx = Gdx.graphics.getWidth();
         screenHeightPx = Gdx.graphics.getHeight();
         tileWidthPx =  screenWidthPx / mapSize;
@@ -61,12 +70,12 @@ public class MapGdx{
     }
 
     /**
-     * Render a partial map around certain position
-     * map size determined by mapVisibilityWidth and mapVisibilityHeight
+     * Render a partial worldMap around certain position
+     * worldMap size determined by mapVisibilityWidth and mapVisibilityHeight
      * @param pos
      */
     public void renderAroundPos(Position pos){
-        //Check that the rendering doesn't go past map limits
+        //Check that the rendering doesn't go past worldMap limits
         renderStartXTiles = pos.X() - mapVisibilityWidth / 2;
         renderEndXTiles = pos.X() + mapVisibilityWidth / 2;
         renderStartYTiles = pos.Y() - mapVisibilityHeight / 2;
@@ -80,7 +89,7 @@ public class MapGdx{
 
     /**
      * Translate a Position object to screen pixel coordinates
-     * @param pos position in map coordinates
+     * @param pos position in worldMap coordinates
      * @return position as pixels
      */
     public Position PositionToScreenCoordinates(Position pos){
@@ -95,14 +104,6 @@ public class MapGdx{
         return mapSize;
     }
 
-    public int GetMapWidthPixels(){
-        return screenWidthPx;
-    }
-
-    public int GetMapHeightPixels(){
-        return screenHeightPx;
-    }
-
     public int GetTileWidthPixels(){
         return tileWidthPx;
     }
@@ -111,13 +112,17 @@ public class MapGdx{
         return tileHeightPx;
     }
 
+    public GameMap GetWorldMap(){
+        return worldMap;
+    }
+
     private void renderPartialMap(int xMin, int xMax, int yMin, int yMax){
         tileWidthPx = screenWidthPx / (xMax - xMin);
         tileHeightPx = screenHeightPx / (yMax - yMin);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         for(int i = 0; i < (xMax - xMin); i++){
             for(int j = 0; j < (yMax - yMin); j++){
-                Tile t = map.GetTile(i+xMin,j+yMin);
+                Tile t = worldMap.GetTile(i+xMin,j+yMin);
                 MainGame.SpriteBatchInstance().begin();
                 switch(t){
                     case TILE_DESERT:
@@ -142,6 +147,10 @@ public class MapGdx{
         shapeRenderer.end();
     }
 
+    public Tile TileAtPos(Position pos){
+        return worldMap.GetTile(pos.X(), pos.Y());
+    }
+
     private void loadTextures(){
         grass_t = new Texture("grass64.png");
         forest_t = new Texture("forest64.png");
@@ -150,8 +159,8 @@ public class MapGdx{
     }
 
     /**
-     * Check that the rendered partial map does not
-     * go past the map limits
+     * Check that the rendered partial worldMap does not
+     * go past the worldMap limits
      */
     private void checkRenderingBoundaries(){
         if(renderStartXTiles < 0){
@@ -172,7 +181,7 @@ public class MapGdx{
     }
 
     /**
-     * Determine the zoom level of the map according to the screen size
+     * Determine the zoom level of the worldMap according to the screen size
      */
     private void determineVisibleMapArea(){
         int visibilityw = 32, visibilityh = 32;

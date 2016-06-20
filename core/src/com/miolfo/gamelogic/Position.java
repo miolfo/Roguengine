@@ -54,6 +54,10 @@ public class Position {
         return this.x + ", " + this.y;
     }
 
+    public Position Clone(){
+        return new Position(this.x, this.y);
+    }
+
     public enum MoveDirection{
         NORTH, SOUTH, EAST, WEST
     }

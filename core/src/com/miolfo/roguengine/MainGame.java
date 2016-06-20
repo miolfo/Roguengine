@@ -3,6 +3,7 @@ package com.miolfo.roguengine;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.miolfo.gamelogic.GameMap;
 import com.miolfo.gamelogic.Player;
 import com.miolfo.gamelogic.Position;
 
@@ -16,6 +17,7 @@ import com.miolfo.gamelogic.Position;
 public class MainGame extends Game {
     private static SpriteBatch mBatch;
     private static Player mPlayer;
+    private static GameMap mCurrentMap;
     private Texture mPlayer_t;
     private MapGdx mMapGdx;
     private BasicUi mBasicUi;
@@ -39,6 +41,7 @@ public class MainGame extends Game {
         mPlayer_t = new Texture("player64.png");
         mPlayer.SetTexture(mPlayer_t);
         mMapGdx = new MapGdx();
+        mCurrentMap = mMapGdx.GetWorldMap();
         mPlayer.Move(new Position(mMapGdx.GetMapSize() / 2, mMapGdx.GetMapSize() / 2));
         System.out.println("Player set to " + mPlayer.GetPosition());
         mBasicUi = new BasicUi();
@@ -52,6 +55,7 @@ public class MainGame extends Game {
 
     @Override
     public void render() {
+        updateGameState();
         super.render();
         mMapGdx.renderAroundPos(mPlayer.GetPosition());
         //mMapGdx.renderWholeMap();
@@ -66,6 +70,10 @@ public class MainGame extends Game {
         mMapGdx.resize();
     }
 
+    public static GameMap GetCurrentMap(){
+        return mCurrentMap;
+    }
+
     private void renderPlayer(){
         mBatch.begin();
         Position playerInPx = mMapGdx.PositionToScreenCoordinates(mPlayer.GetPosition());
@@ -75,5 +83,9 @@ public class MainGame extends Game {
                 mMapGdx.GetTileWidthPixels(),
                 mMapGdx.GetTileHeightPixels());
         mBatch.end();
+    }
+
+    private void updateGameState(){
+        //TODO: Game logic here?
     }
 }

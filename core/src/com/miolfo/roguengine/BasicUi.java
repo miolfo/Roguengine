@@ -8,7 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.miolfo.gamelogic.GameMap;
 import com.miolfo.gamelogic.Position;
+import com.miolfo.gamelogic.Tile;
 
 /**
  * Created by Mikko Forsman on 16.6.2016.
@@ -98,6 +100,7 @@ public class BasicUi {
 
         public void touchUp(InputEvent event, float x, float y, int pointer, int button){
             String buttonName = event.getListenerActor().getName();
+            Position oldPlayerPos = MainGame.GetPlayer().GetPosition().Clone();
             if(buttonName.equals(DOWN_ARROW_NAME)){
                 MainGame.GetPlayer().Move(Position.MoveDirection.SOUTH);
                 GameConsole.WriteLine("Moved south");
@@ -111,6 +114,15 @@ public class BasicUi {
                 MainGame.GetPlayer().Move(Position.MoveDirection.EAST);
                 GameConsole.WriteLine("Moved east");
             }
+            //If the move was invalid, return back to original position
+            if(!isMoveValid(MainGame.GetPlayer().GetPosition(), MainGame.GetCurrentMap())){
+                MainGame.GetPlayer().Move(oldPlayerPos);
+                GameConsole.WriteLine("Can't move outside of map!");
+            }
         }
     };
+
+    private boolean isMoveValid(Position newPos, GameMap usedMap){
+        return usedMap.GetTile(newPos.X(), newPos.Y()) != Tile.TILE_UNDEFINED;
+    }
 }
