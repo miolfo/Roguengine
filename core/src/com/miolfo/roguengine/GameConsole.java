@@ -6,6 +6,7 @@ package com.miolfo.roguengine;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
@@ -45,11 +46,14 @@ public class GameConsole {
 
     public void render(){
         //Render the black box for the console
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         mShapeRenderer.begin();
         mShapeRenderer.set(ShapeRenderer.ShapeType.Filled);
-        mShapeRenderer.setColor(Color.BLACK);
+        mShapeRenderer.setColor(0, 0, 0, 0.5f);
         mShapeRenderer.rect(0, Gdx.graphics.getHeight() - mConsoleHeight, Gdx.graphics.getWidth(), mConsoleHeight);
         mShapeRenderer.end();
+        Gdx.gl.glDisable(GL20.GL_BLEND);
 
         //Render the latest texts
         renderLines();
