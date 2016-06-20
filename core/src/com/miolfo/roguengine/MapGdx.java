@@ -67,11 +67,20 @@ public class MapGdx{
      * @param pos
      */
     public void renderAroundPos(Position pos){
-        renderPartialMap(pos.X() - mapVisibilityWidth / 2,
-                pos.X() + mapVisibilityWidth / 2,
-                pos.Y() - mapVisibilityHeight / 2,
-                pos.Y() + mapVisibilityHeight / 2);
-        //System.out.println("Rendered from " + (pos.X() - mapVisibilityWidth / 2) + "to " + (pos.X() + mapVisibilityWidth / 2));
+        //Check that the rendering doesn't go past map limits
+        int startx = pos.X() - mapVisibilityWidth / 2;
+        int endx = pos.X() + mapVisibilityWidth / 2;
+        int starty = pos.Y() - mapVisibilityHeight / 2;
+        int endy = pos.Y() + mapVisibilityHeight / 2;
+        renderPartialMap(startx, endx, starty, endy);
+    }
+
+    /**
+     * Translate a Position object to screen pixel coordinates
+     * @param pos
+     */
+    public void PositionToScreenCoordinates(Position pos){
+
     }
 
     public int GetMapSize(){

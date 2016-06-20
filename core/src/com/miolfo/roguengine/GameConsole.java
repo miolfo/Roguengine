@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 /**
  * Class to handle the "console" visible in the game screen
@@ -42,10 +41,6 @@ public class GameConsole {
         mTextHeight = mFont.getXHeight() + TEXT_HEIGHT_SEPARATION;
         mVisibleLines = (int) (mConsoleHeight / mTextHeight);
 
-
-        /*for(int i = 0; i < 25; i++){
-            mLines.add("Sirkus" + i);
-        }*/
     }
 
     public void render(){
@@ -72,7 +67,6 @@ public class GameConsole {
 
     private void renderLines(){
         MainGame.SpriteBatchInstance().begin();
-        //mFont.draw(MainGame.SpriteBatchInstance(), "Top Tek", 0, Gdx.graphics.getHeight() - mConsoleHeight);
         //Draw latest mVisibleLines
         for(int i = 0; i < Math.min(mVisibleLines, mLines.size()); i++){
             String drawn = mLines.get(mLines.size()-i-1);

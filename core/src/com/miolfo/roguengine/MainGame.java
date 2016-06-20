@@ -67,6 +67,7 @@ public class MainGame extends Game {
     }
 
     private void renderPlayer(){
+        //TODO: Don't always render in the middle of the screen
         mBatch.begin();
         mBatch.draw(mPlayer.GetTexture(),
                 mMapGdx.GetMapWidthPixels() / 2,
