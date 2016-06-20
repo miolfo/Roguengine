@@ -7,6 +7,9 @@ import com.miolfo.roguengine.RoguEngine;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.height = 720;
+		config.width = 1280;
+		config.resizable = false;
 		new LwjglApplication(new RoguEngine(), config);
 	}
 }

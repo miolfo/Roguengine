@@ -39,12 +39,9 @@ public class MainGame extends Game {
         mPlayer_t = new Texture("player64.png");
         mPlayer.SetTexture(mPlayer_t);
         mMapGdx = new MapGdx();
-        mMapGdx.create();
         mPlayer.Move(new Position(mMapGdx.GetMapSize() / 2, mMapGdx.GetMapSize() / 2));
         System.out.println("Player set to " + mPlayer.GetPosition());
-
         mBasicUi = new BasicUi();
-        mBasicUi.create();
     }
 
     @Override

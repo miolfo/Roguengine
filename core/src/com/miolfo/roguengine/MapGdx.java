@@ -28,6 +28,10 @@ public class MapGdx{
     private int tileWidthPx, tileHeightPx, mapSize, screenHeight, screenWidth;
     private int mapVisibilityWidth, mapVisibilityHeight;
 
+    public MapGdx(){
+        create();
+    }
+
     public void create() {
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);

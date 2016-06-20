@@ -28,12 +28,21 @@ public class BasicUi {
     private Skin mSkin;
     private TextureAtlas mButtonAtlas;
 
+    private static GameConsole mGameConsole;
+
+
+    public BasicUi(){
+        create();
+        mGameConsole = new GameConsole();
+    }
+
     public void create() {
         createArrows();
     }
 
     public void render() {
         mStage.draw();
+        mGameConsole.render();
     }
 
     private void createArrows(){
@@ -91,12 +100,16 @@ public class BasicUi {
             String buttonName = event.getListenerActor().getName();
             if(buttonName.equals(DOWN_ARROW_NAME)){
                 MainGame.GetPlayer().Move(Position.MoveDirection.SOUTH);
+                GameConsole.WriteLine("Moved south");
             } else if(buttonName.equals(UP_ARROW_NAME)) {
                 MainGame.GetPlayer().Move(Position.MoveDirection.NORTH);
+                GameConsole.WriteLine("Moved north");
             } else if(buttonName.equals(LEFT_ARROW_NAME)){
                 MainGame.GetPlayer().Move(Position.MoveDirection.WEST);
+                GameConsole.WriteLine("Moved west");
             } else if(buttonName.equals(RIGHT_ARROW_NAME)){
                 MainGame.GetPlayer().Move(Position.MoveDirection.EAST);
+                GameConsole.WriteLine("Moved east");
             }
         }
     };
