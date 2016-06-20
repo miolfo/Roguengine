@@ -74,7 +74,6 @@ public class MainGame implements Screen {
 
     @Override
     public void render(float v) {
-        System.out.println("asd");
         //mBatch.begin();
         updateGameState();
         mMapGdx.renderAroundPos(mPlayer.GetPosition());
