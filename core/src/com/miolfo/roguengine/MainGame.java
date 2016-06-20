@@ -67,11 +67,11 @@ public class MainGame extends Game {
     }
 
     private void renderPlayer(){
-        //TODO: Don't always render in the middle of the screen
         mBatch.begin();
+        Position playerInPx = mMapGdx.PositionToScreenCoordinates(mPlayer.GetPosition());
         mBatch.draw(mPlayer.GetTexture(),
-                mMapGdx.GetMapWidthPixels() / 2,
-                mMapGdx.GetMapHeightPixels() / 2,
+                playerInPx.X(),
+                playerInPx.Y(),
                 mMapGdx.GetTileWidthPixels(),
                 mMapGdx.GetTileHeightPixels());
         mBatch.end();
