@@ -1,6 +1,7 @@
 package com.miolfo.roguengine;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.miolfo.gamelogic.GameMap;
@@ -14,7 +15,7 @@ import com.miolfo.gamelogic.Position;
 /**
  * Main gdx logic of the game
  */
-public class MainGame extends Game {
+public class MainGame implements Screen {
     private static SpriteBatch mBatch;
     private static Player mPlayer;
     private static GameMap mCurrentMap;
@@ -35,6 +36,25 @@ public class MainGame extends Game {
     }
 
     @Override
+    public void show() {
+        create();
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
     public void create() {
         mBatch = new SpriteBatch();
         mPlayer = new Player();
@@ -49,15 +69,14 @@ public class MainGame extends Game {
 
     @Override
     public void dispose() {
-        super.dispose();
         mBatch.dispose();
     }
 
     @Override
-    public void render() {
+    public void render(float v) {
+        System.out.println("asd");
         //mBatch.begin();
         updateGameState();
-        super.render();
         mMapGdx.renderAroundPos(mPlayer.GetPosition());
         //mMapGdx.renderWholeMap();
         renderPlayer();
@@ -68,7 +87,6 @@ public class MainGame extends Game {
 
     @Override
     public void resize(int width, int height) {
-        super.resize(width, height);
         mMapGdx.resize();
     }
 
