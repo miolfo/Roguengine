@@ -1,6 +1,8 @@
 package com.miolfo.roguengine;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -29,6 +31,7 @@ public class BasicUi {
     private Button.ButtonStyle mArrowStyle;
     private Skin mSkin;
     private TextureAtlas mButtonAtlas;
+    private BitmapFont mFont;
 
     private static GameConsole mGameConsole;
 
@@ -40,11 +43,18 @@ public class BasicUi {
 
     public void create() {
         createArrows();
+        mFont = new BitmapFont();
+        mFont.setColor(Color.WHITE);
+
     }
 
     public void render() {
         mStage.draw();
         mGameConsole.render();
+        //Render fps
+        MainGame.SpriteBatchInstance().begin();
+        mFont.draw(MainGame.SpriteBatchInstance(), "FPS: " + Gdx.graphics.getFramesPerSecond(), 0,20);
+        MainGame.SpriteBatchInstance().end();
     }
 
     private void createArrows(){

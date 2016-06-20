@@ -55,12 +55,14 @@ public class MainGame extends Game {
 
     @Override
     public void render() {
+        //mBatch.begin();
         updateGameState();
         super.render();
         mMapGdx.renderAroundPos(mPlayer.GetPosition());
         //mMapGdx.renderWholeMap();
         renderPlayer();
         mBasicUi.render();
+        //mBatch.end();
     }
 
 

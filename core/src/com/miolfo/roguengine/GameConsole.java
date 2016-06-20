@@ -76,7 +76,6 @@ public class GameConsole {
             String drawn = mLines.get(mLines.size()-i-1);
             mFont.draw(MainGame.SpriteBatchInstance(), drawn, 0, Gdx.graphics.getHeight() - mTextHeight*i);
         }
-
         MainGame.SpriteBatchInstance().end();
     }
 }
