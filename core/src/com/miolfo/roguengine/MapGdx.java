@@ -122,12 +122,11 @@ public class MapGdx{
     }
 
     private void renderPartialMap(int xMin, int xMax, int yMin, int yMax){
-        tileWidthPx = screenWidthPx / (xMax - xMin);
-        tileHeightPx = screenHeightPx / (yMax - yMin);
+
         MainGame.SpriteBatchInstance().begin();
 
         //shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        for(int i = 0; i < (xMax - xMin); i++){
+        for(int i = 0; i <= (xMax - xMin); i++){
             for(int j = 0; j < (yMax - yMin); j++){
                 Tile t = worldMap.GetTile(i+xMin,j+yMin);
                 switch(t){
@@ -191,16 +190,23 @@ public class MapGdx{
 
     /**
      * Determine the zoom level of the worldMap according to the screen size
+     * TODO: Currently very hackish
      */
     private void determineVisibleMapArea(){
-        int visibilityw = 32, visibilityh = 32;
+        int visibilityw = 8, visibilityh = 8;
         while(screenWidthPx % visibilityw != 0){
             visibilityw++;
         }
         while(screenHeightPx % visibilityh != 0){
             visibilityh++;
         }
+
         mapVisibilityWidth = visibilityw;
         mapVisibilityHeight = visibilityh;
+        tileWidthPx = screenWidthPx / mapVisibilityWidth;
+        tileHeightPx = screenHeightPx / mapVisibilityHeight;
+        System.out.println(visibilityw + "," + visibilityh);
+        System.out.println("Screen width: " + Gdx.graphics.getWidth() + ", tilePx: " + tileWidthPx);
+        System.out.println("Screen height: " + Gdx.graphics.getHeight() + ", tilePx: " + tileHeightPx);
     }
 }

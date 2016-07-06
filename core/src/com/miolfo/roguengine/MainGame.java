@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.miolfo.gamelogic.GameMap;
 import com.miolfo.gamelogic.Player;
 import com.miolfo.gamelogic.Position;
-import com.miolfo.roguengine.UI.GameView;
+import com.miolfo.roguengine.UI.MainGameView;
 
 /**
  * Created by Mikko Forsman on 14.6.2016.
@@ -21,7 +21,7 @@ public class MainGame implements Screen {
     private static GameMap mCurrentMap;
     private Texture mPlayer_t;
     private MapGdx mMapGdx;
-    private GameView mGameView;
+    private MainGameView mMainGameView;
 
     public static SpriteBatch SpriteBatchInstance(){
         return mBatch;
@@ -64,7 +64,7 @@ public class MainGame implements Screen {
         mCurrentMap = mMapGdx.GetWorldMap();
         mPlayer.Move(new Position(mMapGdx.GetMapSize() / 2, mMapGdx.GetMapSize() / 2));
         System.out.println("Player set to " + mPlayer.GetPosition());
-        mGameView = new GameView();
+        mMainGameView = new MainGameView();
     }
 
     @Override
@@ -79,7 +79,7 @@ public class MainGame implements Screen {
         mMapGdx.renderAroundPos(mPlayer.GetPosition());
         //mMapGdx.renderWholeMap();
         renderPlayer();
-        mGameView.render();
+        mMainGameView.render();
         //mBatch.end();
     }
 

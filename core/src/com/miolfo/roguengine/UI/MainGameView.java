@@ -9,28 +9,27 @@ import com.miolfo.roguengine.MainGame;
  * Created by Mikko Forsman on 16.6.2016.
  * Class to handle the basic GUI during the game
  */
-public class GameView {
+public class MainGameView {
 
     private BitmapFont mFont;
 
     private static GameConsole mGameConsole;
-    private static MovementArrows mMovementArrows;
+    private static MainGameButtons mMainGameButtons;
 
-    public GameView(){
+    public MainGameView(){
         create();
         mGameConsole = new GameConsole();
-        mMovementArrows = new MovementArrows();
+        mMainGameButtons = new MainGameButtons();
     }
 
     public void create() {
         mFont = new BitmapFont();
         mFont.setColor(Color.WHITE);
-
     }
 
     public void render() {
         mGameConsole.render();
-        mMovementArrows.render();
+        mMainGameButtons.render();
         //Render fps
         MainGame.SpriteBatchInstance().begin();
         mFont.draw(MainGame.SpriteBatchInstance(), "FPS: " + Gdx.graphics.getFramesPerSecond(), 0,20);

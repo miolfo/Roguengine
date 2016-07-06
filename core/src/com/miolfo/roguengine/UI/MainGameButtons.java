@@ -16,7 +16,7 @@ import com.miolfo.roguengine.MainGame;
 /**
  * Created by Mikko Forsman on 6.7.2016.
  */
-public class MovementArrows {
+public class MainGameButtons {
     private int ARROW_SIZE = 128;
     private final String UP_ARROW_NAME = "ArrowUp";
     private final String DOWN_ARROW_NAME = "ArrowDown";
@@ -29,7 +29,7 @@ public class MovementArrows {
     private Skin mSkin;
     private TextureAtlas mButtonAtlas;
 
-    public MovementArrows(){
+    public MainGameButtons(){
         createArrows();
     }
 
@@ -89,15 +89,15 @@ public class MovementArrows {
         mArrowUp = new ImageButton(mArrowStyle.up, mArrowStyle.down);
         mArrowUp.setSize(ARROW_SIZE, ARROW_SIZE);
         mArrowUp.getImage().setRotation(180);
-        mArrowUp.setPosition(Gdx.graphics.getWidth() - ARROW_SIZE, ARROW_SIZE * 2);
+        mArrowUp.setPosition(Gdx.graphics.getWidth() - ARROW_SIZE, ARROW_SIZE * 3f);
         mArrowRight = new ImageButton(mArrowStyle.up, mArrowStyle.down);
         mArrowRight.setSize(ARROW_SIZE, ARROW_SIZE);
         mArrowRight.getImage().setRotation(90);
-        mArrowRight.setPosition(Gdx.graphics.getWidth(),ARROW_SIZE / 2);
+        mArrowRight.setPosition(Gdx.graphics.getWidth(),ARROW_SIZE );
         mArrowLeft = new ImageButton(mArrowStyle.up, mArrowStyle.down);
         mArrowLeft.setSize(ARROW_SIZE, ARROW_SIZE);
         mArrowLeft.getImage().setRotation(270);
-        mArrowLeft.setPosition(Gdx.graphics.getWidth() - ARROW_SIZE * 3, ARROW_SIZE + ARROW_SIZE / 2);
+        mArrowLeft.setPosition(Gdx.graphics.getWidth() - ARROW_SIZE * 3, ARROW_SIZE + ARROW_SIZE);
 
         mArrowDown.setName(DOWN_ARROW_NAME);
         mArrowUp.setName(UP_ARROW_NAME);
