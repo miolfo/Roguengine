@@ -3,7 +3,10 @@ package com.miolfo.roguengine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.miolfo.gamelogic.GameMap;
 import com.miolfo.gamelogic.MapFactory;
 import com.miolfo.gamelogic.Position;
@@ -22,7 +25,9 @@ public class MapGdx{
 
     private static ShapeRenderer shapeRenderer;
     private GameMap worldMap;
-    private Texture grass_t, forest_t, snow_t, desert_t;
+    private Skin mSkin;
+    private TextureAtlas mTextureAtlas;
+    private Sprite grass_t, forest_t, snow_t, desert_t;
 
     //Map parameters
     private int tileWidthPx, tileHeightPx, mapSize, screenHeightPx, screenWidthPx,
@@ -119,11 +124,12 @@ public class MapGdx{
     private void renderPartialMap(int xMin, int xMax, int yMin, int yMax){
         tileWidthPx = screenWidthPx / (xMax - xMin);
         tileHeightPx = screenHeightPx / (yMax - yMin);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        MainGame.SpriteBatchInstance().begin();
+
+        //shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         for(int i = 0; i < (xMax - xMin); i++){
             for(int j = 0; j < (yMax - yMin); j++){
                 Tile t = worldMap.GetTile(i+xMin,j+yMin);
-                MainGame.SpriteBatchInstance().begin();
                 switch(t){
                     case TILE_DESERT:
                         MainGame.SpriteBatchInstance().draw(desert_t, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
@@ -138,13 +144,14 @@ public class MapGdx{
                         MainGame.SpriteBatchInstance().draw(snow_t, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
                         break;
                     default:
-                        shapeRenderer.setColor(Color.WHITE);
+                        //shapeRenderer.setColor(Color.WHITE);
                         break;
                 }
-                MainGame.SpriteBatchInstance().end();
             }
         }
-        shapeRenderer.end();
+        //shapeRenderer.end();
+        MainGame.SpriteBatchInstance().end();
+
     }
 
     public Tile TileAtPos(Position pos){
@@ -152,10 +159,12 @@ public class MapGdx{
     }
 
     private void loadTextures(){
-        grass_t = new Texture("grass64.png");
-        forest_t = new Texture("forest64.png");
-        snow_t = new Texture("snow64.png");
-        desert_t = new Texture("desert64.png");
+        mSkin = new Skin();
+        mTextureAtlas = new TextureAtlas(Gdx.files.internal("maptextures.atlas"));
+        grass_t = mTextureAtlas.createSprite("grass64");
+        forest_t = mTextureAtlas.createSprite("forest64");
+        snow_t = mTextureAtlas.createSprite("snow64");
+        desert_t = mTextureAtlas.createSprite("desert64");
     }
 
     /**
