@@ -159,7 +159,7 @@ public class MapGdx{
 
     private void loadTextures(){
         mSkin = new Skin();
-        mTextureAtlas = new TextureAtlas(Gdx.files.internal("maptextures.atlas"));
+        mTextureAtlas = new TextureAtlas(Gdx.files.internal("graphics/maptextures.atlas"));
         grass_t = mTextureAtlas.createSprite("grass64");
         forest_t = mTextureAtlas.createSprite("forest64");
         snow_t = mTextureAtlas.createSprite("snow64");

@@ -97,7 +97,7 @@ public class MainGameButtons {
         mStage = new Stage();
         Gdx.input.setInputProcessor(mStage);
         mSkin = new Skin();
-        mButtonAtlas = new TextureAtlas(Gdx.files.internal("mainbuttons.atlas"));
+        mButtonAtlas = new TextureAtlas(Gdx.files.internal("graphics/mainbuttons.atlas"));
         mSkin.addRegions(mButtonAtlas);
 
         mArrowStyle = new ImageButton.ImageButtonStyle();
