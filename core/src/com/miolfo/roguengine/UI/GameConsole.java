@@ -1,4 +1,4 @@
-package com.miolfo.roguengine;
+package com.miolfo.roguengine.UI;
 
 /**
  * Created by Mikko Forsman on 20.6.2016.
@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.miolfo.roguengine.MainGame;
 
 import java.util.ArrayList;
 

@@ -1,8 +1,6 @@
-package com.miolfo.roguengine;
+package com.miolfo.roguengine.UI;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -13,13 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.miolfo.gamelogic.GameMap;
 import com.miolfo.gamelogic.Position;
 import com.miolfo.gamelogic.Tile;
+import com.miolfo.roguengine.MainGame;
 
 /**
- * Created by Mikko Forsman on 16.6.2016.
- * Class to handle the basic GUI during the game
+ * Created by Mikko Forsman on 6.7.2016.
  */
-public class BasicUi {
-
+public class MovementArrows {
     private int ARROW_SIZE = 128;
     private final String UP_ARROW_NAME = "ArrowUp";
     private final String DOWN_ARROW_NAME = "ArrowDown";
@@ -31,30 +28,47 @@ public class BasicUi {
     private Button.ButtonStyle mArrowStyle;
     private Skin mSkin;
     private TextureAtlas mButtonAtlas;
-    private BitmapFont mFont;
 
-    private static GameConsole mGameConsole;
-
-
-    public BasicUi(){
-        create();
-        mGameConsole = new GameConsole();
-    }
-
-    public void create() {
+    public MovementArrows(){
         createArrows();
-        mFont = new BitmapFont();
-        mFont.setColor(Color.WHITE);
-
     }
 
-    public void render() {
+    public void render(){
         mStage.draw();
-        mGameConsole.render();
-        //Render fps
-        MainGame.SpriteBatchInstance().begin();
-        mFont.draw(MainGame.SpriteBatchInstance(), "FPS: " + Gdx.graphics.getFramesPerSecond(), 0,20);
-        MainGame.SpriteBatchInstance().end();
+    }
+
+    private InputListener moveInputListener = new InputListener(){
+        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+
+            return true;
+        }
+
+        public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+            String buttonName = event.getListenerActor().getName();
+            Position oldPlayerPos = MainGame.GetPlayer().GetPosition().Clone();
+            if(buttonName.equals(DOWN_ARROW_NAME)){
+                MainGame.GetPlayer().Move(Position.MoveDirection.SOUTH);
+                GameConsole.WriteLine("Moved south");
+            } else if(buttonName.equals(UP_ARROW_NAME)) {
+                MainGame.GetPlayer().Move(Position.MoveDirection.NORTH);
+                GameConsole.WriteLine("Moved north");
+            } else if(buttonName.equals(LEFT_ARROW_NAME)){
+                MainGame.GetPlayer().Move(Position.MoveDirection.WEST);
+                GameConsole.WriteLine("Moved west");
+            } else if(buttonName.equals(RIGHT_ARROW_NAME)){
+                MainGame.GetPlayer().Move(Position.MoveDirection.EAST);
+                GameConsole.WriteLine("Moved east");
+            }
+            //If the move was invalid, return back to original position
+            if(!isMoveValid(MainGame.GetPlayer().GetPosition(), MainGame.GetCurrentMap())){
+                MainGame.GetPlayer().Move(oldPlayerPos);
+                GameConsole.WriteLine("Can't move outside of map!");
+            }
+        }
+    };
+
+    private boolean isMoveValid(Position newPos, GameMap usedMap){
+        return usedMap.GetTile(newPos.X(), newPos.Y()) != Tile.TILE_UNDEFINED;
     }
 
     private void createArrows(){
@@ -100,39 +114,5 @@ public class BasicUi {
         mStage.addActor(mArrowUp);
         mStage.addActor(mArrowLeft);
         mStage.addActor(mArrowRight);
-    }
-
-    private InputListener moveInputListener = new InputListener(){
-        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-
-            return true;
-        }
-
-        public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-            String buttonName = event.getListenerActor().getName();
-            Position oldPlayerPos = MainGame.GetPlayer().GetPosition().Clone();
-            if(buttonName.equals(DOWN_ARROW_NAME)){
-                MainGame.GetPlayer().Move(Position.MoveDirection.SOUTH);
-                GameConsole.WriteLine("Moved south");
-            } else if(buttonName.equals(UP_ARROW_NAME)) {
-                MainGame.GetPlayer().Move(Position.MoveDirection.NORTH);
-                GameConsole.WriteLine("Moved north");
-            } else if(buttonName.equals(LEFT_ARROW_NAME)){
-                MainGame.GetPlayer().Move(Position.MoveDirection.WEST);
-                GameConsole.WriteLine("Moved west");
-            } else if(buttonName.equals(RIGHT_ARROW_NAME)){
-                MainGame.GetPlayer().Move(Position.MoveDirection.EAST);
-                GameConsole.WriteLine("Moved east");
-            }
-            //If the move was invalid, return back to original position
-            if(!isMoveValid(MainGame.GetPlayer().GetPosition(), MainGame.GetCurrentMap())){
-                MainGame.GetPlayer().Move(oldPlayerPos);
-                GameConsole.WriteLine("Can't move outside of map!");
-            }
-        }
-    };
-
-    private boolean isMoveValid(Position newPos, GameMap usedMap){
-        return usedMap.GetTile(newPos.X(), newPos.Y()) != Tile.TILE_UNDEFINED;
     }
 }

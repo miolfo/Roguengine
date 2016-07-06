@@ -1,12 +1,12 @@
 package com.miolfo.roguengine;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.miolfo.gamelogic.GameMap;
 import com.miolfo.gamelogic.Player;
 import com.miolfo.gamelogic.Position;
+import com.miolfo.roguengine.UI.GameView;
 
 /**
  * Created by Mikko Forsman on 14.6.2016.
@@ -21,7 +21,7 @@ public class MainGame implements Screen {
     private static GameMap mCurrentMap;
     private Texture mPlayer_t;
     private MapGdx mMapGdx;
-    private BasicUi mBasicUi;
+    private GameView mGameView;
 
     public static SpriteBatch SpriteBatchInstance(){
         return mBatch;
@@ -64,7 +64,7 @@ public class MainGame implements Screen {
         mCurrentMap = mMapGdx.GetWorldMap();
         mPlayer.Move(new Position(mMapGdx.GetMapSize() / 2, mMapGdx.GetMapSize() / 2));
         System.out.println("Player set to " + mPlayer.GetPosition());
-        mBasicUi = new BasicUi();
+        mGameView = new GameView();
     }
 
     @Override
@@ -79,7 +79,7 @@ public class MainGame implements Screen {
         mMapGdx.renderAroundPos(mPlayer.GetPosition());
         //mMapGdx.renderWholeMap();
         renderPlayer();
-        mBasicUi.render();
+        mGameView.render();
         //mBatch.end();
     }
 
