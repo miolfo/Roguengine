@@ -205,8 +205,5 @@ public class MapGdx{
         mapVisibilityHeight = visibilityh;
         tileWidthPx = screenWidthPx / mapVisibilityWidth;
         tileHeightPx = screenHeightPx / mapVisibilityHeight;
-        System.out.println(visibilityw + "," + visibilityh);
-        System.out.println("Screen width: " + Gdx.graphics.getWidth() + ", tilePx: " + tileWidthPx);
-        System.out.println("Screen height: " + Gdx.graphics.getHeight() + ", tilePx: " + tileHeightPx);
     }
 }
