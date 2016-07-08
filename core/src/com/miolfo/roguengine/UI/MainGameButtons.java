@@ -28,7 +28,6 @@ public class MainGameButtons {
     private final String RIGHT_ARROW_NAME = "ArrowRight";
 
     private static boolean mAttacking = false;
-    private boolean mInventoryStateChanged = false;
 
     private static Stage mStage;
     private ImageButton mArrowDown, mArrowUp, mArrowLeft, mArrowRight, mAttack, mInventory;

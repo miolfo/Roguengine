@@ -14,7 +14,7 @@ public class InventoryUi {
 
     private final float INVENTORY_SIZE_FACTOR = 0.7f;
     private final int INVENTORY_WIDTH_SLOTS = 5;    //Temp variable until actual inventory implementation
-    private final int INVENTORY_HEIGHT_SLOTS = 3;   //Temp variable until actual inventory implementation
+    private final int INVENTORY_HEIGHT_SLOTS = 5;   //Temp variable until actual inventory implementation
 
     private float mInvWidth, mInvHeight, mSlotSize;
 
@@ -53,16 +53,18 @@ public class InventoryUi {
      * Render empty inventory slots
      */
     private void renderEmptySlots(){
+        int xOff = 40;  //Offset in pixels in x direction
+        int yOff = 20; //Offset in pixels in y direction
         for(int i = 0; i < INVENTORY_WIDTH_SLOTS; i++){
-            //for(int j = 0; j < INVENTORY_HEIGHT_SLOTS; i++){
-            //    MainGame.SpriteBatchInstance().draw(mInventorySlot, );
-            //}
-            MainGame.SpriteBatchInstance().draw(mInventorySlot,
-                    ((Gdx.graphics.getWidth() - mInvWidth) / 2) + (i*mSlotSize) + 70,
-                    (Gdx.graphics.getHeight() - mInvHeight) /2 + 40,
-                    mSlotSize,
-                    mSlotSize
-                    );
+            for(int j = 0; j < INVENTORY_HEIGHT_SLOTS; j++) {
+                //}
+                MainGame.SpriteBatchInstance().draw(mInventorySlot,
+                        ((Gdx.graphics.getWidth() - mInvWidth) / 2) + (i * mSlotSize) + xOff,
+                        ((Gdx.graphics.getHeight() - mInvHeight) + mInvHeight / 2) - (j * mSlotSize) + yOff,
+                        mSlotSize,
+                        mSlotSize
+                );
+            }
         }
     }
 }
