@@ -59,6 +59,22 @@ public class Position {
     }
 
     public enum MoveDirection{
-        NORTH, SOUTH, EAST, WEST
+        NORTH, SOUTH, EAST, WEST;
+
+        @Override
+        public String toString() {
+            switch(this){
+                case NORTH:
+                    return "North";
+                case SOUTH:
+                    return "South";
+                case WEST:
+                    return "West";
+                case EAST:
+                    return "East";
+                default:
+                    return "Undefined direction";
+            }
+        }
     }
 }

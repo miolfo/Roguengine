@@ -48,23 +48,26 @@ public class MainGameButtons {
         public void touchUp(InputEvent event, float x, float y, int pointer, int button){
             String buttonName = event.getListenerActor().getName();
             Position oldPlayerPos = MainGame.GetPlayer().GetPosition().Clone();
+            Position.MoveDirection moveDirection;
             if(buttonName.equals(DOWN_ARROW_NAME)){
                 MainGame.GetPlayer().Move(Position.MoveDirection.SOUTH);
-                GameConsole.WriteLine("Moved south");
+                moveDirection = Position.MoveDirection.SOUTH;
             } else if(buttonName.equals(UP_ARROW_NAME)) {
                 MainGame.GetPlayer().Move(Position.MoveDirection.NORTH);
-                GameConsole.WriteLine("Moved north");
+                moveDirection = Position.MoveDirection.NORTH;
             } else if(buttonName.equals(LEFT_ARROW_NAME)){
                 MainGame.GetPlayer().Move(Position.MoveDirection.WEST);
-                GameConsole.WriteLine("Moved west");
-            } else if(buttonName.equals(RIGHT_ARROW_NAME)){
+                moveDirection = Position.MoveDirection.WEST;
+            } else{
                 MainGame.GetPlayer().Move(Position.MoveDirection.EAST);
-                GameConsole.WriteLine("Moved east");
+                moveDirection = Position.MoveDirection.EAST;
             }
             //If the move was invalid, return back to original position
             if(!isMoveValid(MainGame.GetPlayer().GetPosition(), MainGame.GetCurrentMap())){
                 MainGame.GetPlayer().Move(oldPlayerPos);
                 GameConsole.WriteLine("Can't move outside of map!");
+            } else{
+                GameConsole.WriteLine("Moved " + moveDirection.toString() + " to " + MainGame.GetPlayer().GetPosition());
             }
         }
     };
