@@ -32,7 +32,7 @@ public class MainGameButtons {
 
     private static Stage mStage;
     private ImageButton mArrowDown, mArrowUp, mArrowLeft, mArrowRight, mAttack, mInventory;
-    private ImageButton.ImageButtonStyle mArrowStyle, mAttackStyle1, mAttackStyle2;
+    private ImageButton.ImageButtonStyle mAttackStyle1, mAttackStyle2;
     private Skin mSkin;
     private TextureAtlas mButtonAtlas;
 
@@ -134,9 +134,6 @@ public class MainGameButtons {
         mButtonAtlas = new TextureAtlas(Gdx.files.internal("graphics/mainbuttons.atlas"));
         mSkin.addRegions(mButtonAtlas);
 
-        mArrowStyle = new ImageButton.ImageButtonStyle();
-        mArrowStyle.up = mSkin.getDrawable("arrow");
-        mArrowStyle.down = mSkin.getDrawable("arrow2");
         Sprite arrowUpSprite = mSkin.getSprite("arrow");
         arrowUpSprite.setSize(BUTTON_SIZE, BUTTON_SIZE);
         Sprite arrowDownSprite = mSkin.getSprite("arrow2");
