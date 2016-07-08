@@ -15,11 +15,13 @@ public class MainGameView {
 
     private static GameConsole mGameConsole;
     private static MainGameButtons mMainGameButtons;
+    private static InventoryUi mInventoryUi;
 
     public MainGameView(){
         create();
         mGameConsole = new GameConsole();
         mMainGameButtons = new MainGameButtons();
+        mInventoryUi = new InventoryUi();
     }
 
     public void create() {
@@ -30,6 +32,7 @@ public class MainGameView {
     public void render() {
         mGameConsole.render();
         mMainGameButtons.render();
+        if(mInventoryUi.isVisible()) mInventoryUi.render();
         //Render fps
         MainGame.SpriteBatchInstance().begin();
         mFont.draw(MainGame.SpriteBatchInstance(), "FPS: " + Gdx.graphics.getFramesPerSecond(), 0,20);

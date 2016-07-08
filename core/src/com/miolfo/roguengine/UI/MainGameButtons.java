@@ -27,10 +27,11 @@ public class MainGameButtons {
     private final String RIGHT_ARROW_NAME = "ArrowRight";
 
     private static boolean mAttacking = false;
+    private boolean mInventoryStateChanged = false;
 
     private static Stage mStage;
     private ImageButton mArrowDown, mArrowUp, mArrowLeft, mArrowRight, mAttack, mInventory;
-    private ImageButton.ImageButtonStyle mArrowStyle, mAttackStyle1, mAttackStyle2, mInventoryStyle;
+    private ImageButton.ImageButtonStyle mArrowStyle, mAttackStyle1, mAttackStyle2;
     private Skin mSkin;
     private TextureAtlas mButtonAtlas;
 
@@ -42,35 +43,48 @@ public class MainGameButtons {
         mStage.draw();
     }
 
+
+    private InputListener inventoryInputListener = new InputListener(){
+        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+            return true;
+        }
+        public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+            InventoryUi.toggleVisibility();
+        }
+    };
+
     private InputListener moveInputListener = new InputListener(){
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-
             return true;
         }
 
         public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-            String buttonName = event.getListenerActor().getName();
-            Position oldPlayerPos = MainGame.GetPlayer().GetPosition().Clone();
-            Position.MoveDirection moveDirection;
-            if(buttonName.equals(DOWN_ARROW_NAME)){
-                MainGame.GetPlayer().Move(Position.MoveDirection.SOUTH);
-                moveDirection = Position.MoveDirection.SOUTH;
-            } else if(buttonName.equals(UP_ARROW_NAME)) {
-                MainGame.GetPlayer().Move(Position.MoveDirection.NORTH);
-                moveDirection = Position.MoveDirection.NORTH;
-            } else if(buttonName.equals(LEFT_ARROW_NAME)){
-                MainGame.GetPlayer().Move(Position.MoveDirection.WEST);
-                moveDirection = Position.MoveDirection.WEST;
-            } else{
-                MainGame.GetPlayer().Move(Position.MoveDirection.EAST);
-                moveDirection = Position.MoveDirection.EAST;
-            }
-            //If the move was invalid, return back to original position
-            if(!isMoveValid(MainGame.GetPlayer().GetPosition(), MainGame.GetCurrentMap())){
-                MainGame.GetPlayer().Move(oldPlayerPos);
-                GameConsole.WriteLine("Can't move outside of map!");
-            } else{
-                GameConsole.WriteLine("Moved " + moveDirection.toString() + " to " + MainGame.GetPlayer().GetPosition());
+            //Disable functionality if inventory is visible
+            //TODO: A smarter solution probably exists...
+            if(!InventoryUi.isVisible()) {
+                String buttonName = event.getListenerActor().getName();
+                Position oldPlayerPos = MainGame.GetPlayer().GetPosition().Clone();
+                Position.MoveDirection moveDirection;
+                if (buttonName.equals(DOWN_ARROW_NAME)) {
+                    MainGame.GetPlayer().Move(Position.MoveDirection.SOUTH);
+                    moveDirection = Position.MoveDirection.SOUTH;
+                } else if (buttonName.equals(UP_ARROW_NAME)) {
+                    MainGame.GetPlayer().Move(Position.MoveDirection.NORTH);
+                    moveDirection = Position.MoveDirection.NORTH;
+                } else if (buttonName.equals(LEFT_ARROW_NAME)) {
+                    MainGame.GetPlayer().Move(Position.MoveDirection.WEST);
+                    moveDirection = Position.MoveDirection.WEST;
+                } else {
+                    MainGame.GetPlayer().Move(Position.MoveDirection.EAST);
+                    moveDirection = Position.MoveDirection.EAST;
+                }
+                //If the move was invalid, return back to original position
+                if (!isMoveValid(MainGame.GetPlayer().GetPosition(), MainGame.GetCurrentMap())) {
+                    MainGame.GetPlayer().Move(oldPlayerPos);
+                    GameConsole.WriteLine("Can't move outside of map!");
+                } else {
+                    GameConsole.WriteLine("Moved " + moveDirection.toString() + " to " + MainGame.GetPlayer().GetPosition());
+                }
             }
         }
     };
@@ -151,6 +165,7 @@ public class MainGameButtons {
         mArrowRight.addListener(moveInputListener);
         mArrowLeft.addListener(moveInputListener);
         mAttack.addListener(attackInputListener);
+        mInventory.addListener(inventoryInputListener);
 
         mStage.addActor(mArrowDown);
         mStage.addActor(mArrowUp);
