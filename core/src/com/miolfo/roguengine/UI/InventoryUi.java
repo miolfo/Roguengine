@@ -1,8 +1,10 @@
 package com.miolfo.roguengine.UI;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.miolfo.roguengine.MainGame;
 
@@ -19,12 +21,10 @@ public class InventoryUi {
     private float mInvWidth, mInvHeight, mSlotSize;
 
     private static boolean mVisible;
-    private Stage mInventoryStage;
     private Sprite mInventoryBase;
     private Sprite mInventorySlot;
 
     public InventoryUi(){
-        mInventoryStage = new Stage();
         mVisible = false;
         mInventoryBase = new Sprite(new Texture(Gdx.files.internal("graphics/inventory_base2.png")));
         mInventorySlot = new Sprite(new Texture(Gdx.files.internal("graphics/empty_slot.png")));
