@@ -1,6 +1,8 @@
 package com.miolfo.roguengine.UI;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -8,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.miolfo.gamelogic.GameMap;
 import com.miolfo.gamelogic.Position;
 import com.miolfo.gamelogic.Tile;
@@ -26,8 +29,8 @@ public class MainGameButtons {
     private static boolean mAttacking = false;
 
     private static Stage mStage;
-    private ImageButton mArrowDown, mArrowUp, mArrowLeft, mArrowRight, mAttack;
-    private ImageButton.ImageButtonStyle mArrowStyle, mAttackStyle1, mAttackStyle2;
+    private ImageButton mArrowDown, mArrowUp, mArrowLeft, mArrowRight, mAttack, mInventory;
+    private ImageButton.ImageButtonStyle mArrowStyle, mAttackStyle1, mAttackStyle2, mInventoryStyle;
     private Skin mSkin;
     private TextureAtlas mButtonAtlas;
 
@@ -129,7 +132,6 @@ public class MainGameButtons {
         mArrowRight.setName(RIGHT_ARROW_NAME);
 
 
-
         mAttackStyle1 = new ImageButton.ImageButtonStyle();
         mAttackStyle1.up = mSkin.getDrawable("attack2");
         mAttackStyle2 = new ImageButton.ImageButtonStyle();
@@ -138,6 +140,11 @@ public class MainGameButtons {
         mAttack.setSize(BUTTON_SIZE, BUTTON_SIZE);
         mAttack.setPosition(Gdx.graphics.getWidth() - BUTTON_SIZE * 2, BUTTON_SIZE);
 
+        mInventory = new ImageButton(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("graphics/inventory32.png")))));
+        //mInventory.setScale(10,10);
+        mInventory.setSize(BUTTON_SIZE,BUTTON_SIZE);
+        mInventory.setPosition(Gdx.graphics.getWidth() - BUTTON_SIZE * 1.5f, Gdx.graphics.getHeight() - BUTTON_SIZE * 2f);
+        mInventory.getImage().setFillParent(true);
 
         mArrowDown.addListener(moveInputListener);
         mArrowUp.addListener(moveInputListener);
@@ -150,5 +157,6 @@ public class MainGameButtons {
         mStage.addActor(mArrowLeft);
         mStage.addActor(mArrowRight);
         mStage.addActor(mAttack);
+        mStage.addActor(mInventory);
     }
 }
