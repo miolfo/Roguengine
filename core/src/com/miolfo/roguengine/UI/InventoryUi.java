@@ -1,11 +1,10 @@
 package com.miolfo.roguengine.UI;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.miolfo.gamelogic.Inventory;
+import com.miolfo.gamelogic.Player;
 import com.miolfo.roguengine.MainGame;
 
 /**
@@ -38,7 +37,7 @@ public class InventoryUi {
         MainGame.SpriteBatchInstance().draw(mInventoryBase, (Gdx.graphics.getWidth() - mInvWidth) / 2,
                     (Gdx.graphics.getHeight() - mInvHeight) /2,
                     mInvWidth, mInvHeight);
-        renderEmptySlots();
+        renderSlots();
         MainGame.SpriteBatchInstance().end();
     }
 
@@ -52,18 +51,30 @@ public class InventoryUi {
     /**
      * Render empty inventory slots
      */
-    private void renderEmptySlots(){
+    private void renderSlots(){
         int xOff = 40;  //Offset in pixels in x direction
         int yOff = 20; //Offset in pixels in y direction
-        for(int i = 0; i < INVENTORY_WIDTH_SLOTS; i++){
-            for(int j = 0; j < INVENTORY_HEIGHT_SLOTS; j++) {
+        int inventoryIndex = 0;
+        Inventory playerInv = Player.GetInstance().GetInventory();
+        for(int i = 0; i < INVENTORY_HEIGHT_SLOTS; i++){
+            for(int j = 0; j < INVENTORY_WIDTH_SLOTS; j++) {
                 //}
                 MainGame.SpriteBatchInstance().draw(mInventorySlot,
-                        ((Gdx.graphics.getWidth() - mInvWidth) / 2) + (i * mSlotSize) + xOff,
-                        ((Gdx.graphics.getHeight() - mInvHeight) + mInvHeight / 2) - (j * mSlotSize) + yOff,
+                        ((Gdx.graphics.getWidth() - mInvWidth) / 2) + (j * mSlotSize) + xOff,
+                        ((Gdx.graphics.getHeight() - mInvHeight) + mInvHeight / 2) - (i * mSlotSize) + yOff,
                         mSlotSize,
                         mSlotSize
                 );
+
+                //If an item for the slot exists, render its sprite to the slot
+                if(playerInv.GetItems().size() > inventoryIndex){
+                    MainGame.SpriteBatchInstance().draw(playerInv.GetItems().get(inventoryIndex).GetSprite(),
+                            ((Gdx.graphics.getWidth() - mInvWidth) / 2) + (j * mSlotSize) + xOff,
+                            ((Gdx.graphics.getHeight() - mInvHeight) + mInvHeight / 2) - (i * mSlotSize) + yOff,
+                            mSlotSize,
+                            mSlotSize);
+                }
+                inventoryIndex++;
             }
         }
     }
