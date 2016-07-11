@@ -10,7 +10,7 @@ public class Item {
     private String mDescription = "";
     private Sprite mSprite;
 
-    public Item(String name, String description, int maxDurability, Sprite sprite){
+    public Item(String name, String description, Sprite sprite){
         this.mName = name;
         this.mDescription = description;
         this.mSprite = sprite;

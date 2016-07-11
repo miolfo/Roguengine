@@ -113,7 +113,7 @@ public class MainGameButtons {
 
             if(mAttacking){
                 //When attacking, change the button style and write to console
-                GameConsole.WriteLine("Select a target to attack, or click on empty tile to cancel");
+                GameConsole.WriteLine("Select attack direction, or click again to cancel attacking");
             }
             else{
 
