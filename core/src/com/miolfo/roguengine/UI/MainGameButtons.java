@@ -22,10 +22,10 @@ import com.miolfo.roguengine.MainGame;
  */
 public class MainGameButtons {
     private int BUTTON_SIZE = 140;
-    private final String UP_ARROW_NAME = "ArrowUp";
-    private final String DOWN_ARROW_NAME = "ArrowDown";
-    private final String LEFT_ARROW_NAME = "ArrowLeft";
-    private final String RIGHT_ARROW_NAME = "ArrowRight";
+    private final String UP_ARROW_NAME = "Up";
+    private final String DOWN_ARROW_NAME = "Down";
+    private final String LEFT_ARROW_NAME = "Left";
+    private final String RIGHT_ARROW_NAME = "Right";
     private final float BUTTON_DOWN_SIZE = 0.9f;    //Size of the button sprite when pressed
 
     private static boolean mAttacking = false;
@@ -72,10 +72,10 @@ public class MainGameButtons {
         }
 
         public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+            String buttonName = event.getListenerActor().getName();
             //Disable functionality if inventory is visible
-            //TODO: A smarter solution probably exists...
-            if(!InventoryUi.isVisible()) {
-                String buttonName = event.getListenerActor().getName();
+            //TODO: A smarter solution probably exists for blocking movement buttons functionality...
+            if(!InventoryUi.isVisible() && !mAttacking) {
                 Position oldPlayerPos = MainGame.GetPlayer().GetPosition().Clone();
                 Position.MoveDirection moveDirection;
                 if (buttonName.equals(DOWN_ARROW_NAME)) {
@@ -98,6 +98,11 @@ public class MainGameButtons {
                 } else {
                     GameConsole.WriteLine("Moved " + moveDirection.toString() + " to " + MainGame.GetPlayer().GetPosition());
                 }
+
+            } else if(mAttacking){
+                //TODO: Attack functionality
+                GameConsole.WriteLine("Attacked " + buttonName);
+                mAttacking = false;
             }
         }
     };
@@ -113,10 +118,10 @@ public class MainGameButtons {
 
             if(mAttacking){
                 //When attacking, change the button style and write to console
-                GameConsole.WriteLine("Select attack direction, or click again to cancel attacking");
+                GameConsole.WriteLine("Select attack direction, or click again to cancel attacking.....");
             }
             else{
-
+                GameConsole.WriteLine("Canceled attacking");
             }
         }
     };
