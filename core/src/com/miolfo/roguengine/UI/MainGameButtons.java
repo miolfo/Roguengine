@@ -26,12 +26,12 @@ public class MainGameButtons {
     private final String DOWN_ARROW_NAME = "ArrowDown";
     private final String LEFT_ARROW_NAME = "ArrowLeft";
     private final String RIGHT_ARROW_NAME = "ArrowRight";
+    private final float BUTTON_DOWN_SIZE = 0.9f;    //Size of the button sprite when pressed
 
     private static boolean mAttacking = false;
 
     private static Stage mStage;
     private ImageButton mArrowDown, mArrowUp, mArrowLeft, mArrowRight, mAttack, mInventory;
-    private ImageButton.ImageButtonStyle mAttackStyle1, mAttackStyle2;
     private Skin mSkin;
     private TextureAtlas mButtonAtlas;
 
@@ -113,11 +113,10 @@ public class MainGameButtons {
 
             if(mAttacking){
                 //When attacking, change the button style and write to console
-                mAttack.setStyle(mAttackStyle2);
                 GameConsole.WriteLine("Select a target to attack, or click on empty tile to cancel");
             }
             else{
-                mAttack.setStyle(mAttackStyle1);
+
             }
         }
     };
@@ -133,45 +132,52 @@ public class MainGameButtons {
         mButtonAtlas = new TextureAtlas(Gdx.files.internal("graphics/mainbuttons.atlas"));
         mSkin.addRegions(mButtonAtlas);
 
-        Sprite arrowUpSprite = mSkin.getSprite("arrow");
-        arrowUpSprite.setSize(BUTTON_SIZE, BUTTON_SIZE);
-        Sprite arrowDownSprite = mSkin.getSprite("arrow2");
-        arrowDownSprite.setSize(BUTTON_SIZE, BUTTON_SIZE);
-
-        mArrowDown = new ImageButton(new SpriteDrawable(arrowUpSprite), new SpriteDrawable(arrowDownSprite));
+        Sprite arrowDownUp = new Sprite(mSkin.getSprite("arrow_down"));
+        arrowDownUp.setSize(BUTTON_SIZE, BUTTON_SIZE);
+        Sprite arrowDownDown = new Sprite(mSkin.getSprite("arrow_down"));
+        arrowDownDown.setSize(BUTTON_SIZE * BUTTON_DOWN_SIZE, BUTTON_SIZE * BUTTON_DOWN_SIZE);
+        mArrowDown = new ImageButton(new SpriteDrawable(arrowDownUp), new SpriteDrawable(arrowDownDown));
         mArrowDown.setPosition(Gdx.graphics.getWidth() - BUTTON_SIZE * 2,0);
 
-        mArrowUp = new ImageButton(new SpriteDrawable(arrowUpSprite), new SpriteDrawable(arrowDownSprite));
-        mArrowUp.getImage().setRotation(180);
-        mArrowUp.rotateBy(180);
-        mArrowUp.setPosition(Gdx.graphics.getWidth() - BUTTON_SIZE, BUTTON_SIZE * 3f);
+        Sprite arrowUpUp = new Sprite(mSkin.getSprite("arrow_up"));
+        arrowUpUp.setSize(BUTTON_SIZE, BUTTON_SIZE);
+        Sprite arrowUpDown = new Sprite(mSkin.getSprite("arrow_up"));
+        arrowUpDown.setSize(BUTTON_SIZE * BUTTON_DOWN_SIZE, BUTTON_SIZE * BUTTON_DOWN_SIZE);
+        mArrowUp = new ImageButton(new SpriteDrawable(arrowUpUp), new SpriteDrawable(arrowUpDown));
+        mArrowUp.setPosition(Gdx.graphics.getWidth() - BUTTON_SIZE * 2, BUTTON_SIZE * 2);
 
-        mArrowRight = new ImageButton(new SpriteDrawable(arrowUpSprite), new SpriteDrawable(arrowDownSprite));
-        mArrowRight.getImage().setRotation(90);
-        mArrowRight.setPosition(Gdx.graphics.getWidth(), BUTTON_SIZE);
+        Sprite arrowRightUp = new Sprite(mSkin.getSprite("arrow_right"));
+        arrowRightUp.setSize(BUTTON_SIZE, BUTTON_SIZE);
+        Sprite arrowRightDown = new Sprite(mSkin.getSprite("arrow_right"));
+        arrowRightDown.setSize(BUTTON_SIZE * BUTTON_DOWN_SIZE, BUTTON_SIZE * BUTTON_DOWN_SIZE);
+        mArrowRight = new ImageButton(new SpriteDrawable(arrowRightUp), new SpriteDrawable(arrowRightDown));
+        mArrowRight.setPosition(Gdx.graphics.getWidth() - BUTTON_SIZE, BUTTON_SIZE);
 
-        mArrowLeft = new ImageButton(new SpriteDrawable(arrowUpSprite), new SpriteDrawable(arrowDownSprite));
-        mArrowLeft.getImage().rotateBy(270);
-        mArrowLeft.rotateBy(270);
-        mArrowLeft.setPosition(Gdx.graphics.getWidth() - BUTTON_SIZE * 3, BUTTON_SIZE + BUTTON_SIZE);
+        Sprite arrowLeftUp = new Sprite(mSkin.getSprite("arrow_left"));
+        arrowLeftUp.setSize(BUTTON_SIZE, BUTTON_SIZE);
+        Sprite arrowLeftDown = new Sprite(mSkin.getSprite("arrow_left"));
+        arrowLeftDown.setSize(BUTTON_SIZE * BUTTON_DOWN_SIZE, BUTTON_SIZE * BUTTON_DOWN_SIZE);
+        mArrowLeft = new ImageButton(new SpriteDrawable(arrowLeftUp), new SpriteDrawable(arrowLeftDown));
+        mArrowLeft.setPosition(Gdx.graphics.getWidth() - BUTTON_SIZE * 3, BUTTON_SIZE);
 
         mArrowDown.setName(DOWN_ARROW_NAME);
         mArrowUp.setName(UP_ARROW_NAME);
         mArrowLeft.setName(LEFT_ARROW_NAME);
         mArrowRight.setName(RIGHT_ARROW_NAME);
 
-
-        mAttackStyle1 = new ImageButton.ImageButtonStyle();
-        mAttackStyle1.up = mSkin.getDrawable("attack2");
-        mAttackStyle2 = new ImageButton.ImageButtonStyle();
-        mAttackStyle2.up = mSkin.getDrawable("attack");
-        mAttack = new ImageButton(mAttackStyle1.up);
+        Sprite attackUp = new Sprite(mSkin.getSprite("attack"));
+        Sprite attackDown = new Sprite(mSkin.getSprite("attack"));
+        attackUp.setSize(BUTTON_SIZE, BUTTON_SIZE);
+        attackDown.setSize(BUTTON_SIZE * BUTTON_DOWN_SIZE, BUTTON_SIZE * BUTTON_DOWN_SIZE);
+        mAttack = new ImageButton(new SpriteDrawable(attackUp), new SpriteDrawable(attackDown));
         mAttack.setSize(BUTTON_SIZE, BUTTON_SIZE);
         mAttack.setPosition(Gdx.graphics.getWidth() - BUTTON_SIZE * 2, BUTTON_SIZE);
 
         Sprite invSprite = new Sprite(new Texture(Gdx.files.internal("graphics/inventory32.png")));
+        Sprite invSpriteDown = new Sprite(new Texture(Gdx.files.internal("graphics/inventory32.png")));
         invSprite.setSize(BUTTON_SIZE, BUTTON_SIZE);
-        mInventory = new ImageButton(new SpriteDrawable(invSprite));
+        invSpriteDown.setSize(BUTTON_SIZE * BUTTON_DOWN_SIZE, BUTTON_SIZE * BUTTON_DOWN_SIZE);
+        mInventory = new ImageButton(new SpriteDrawable(invSprite), new SpriteDrawable(invSpriteDown));
         mInventory.setPosition(Gdx.graphics.getWidth() - BUTTON_SIZE, Gdx.graphics.getHeight() - BUTTON_SIZE * 2f);
 
         mArrowDown.addListener(moveInputListener);

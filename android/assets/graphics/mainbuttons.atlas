@@ -3,31 +3,38 @@ mainbuttons.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-arrow
+arrow_right
   rotate: false
-  xy: 1, 517
-  size: 256, 256
-  orig: 256, 256
+  xy: 1, 1
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
-arrow2
+arrow_left
   rotate: false
-  xy: 1, 259
-  size: 256, 256
-  orig: 256, 256
+  xy: 35, 1
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 attack
   rotate: false
-  xy: 259, 517
-  size: 256, 256
-  orig: 256, 256
+  xy: 69, 1
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
-attack2
+arrow_down
   rotate: false
-  xy: 1, 1
-  size: 256, 256
-  orig: 256, 256
+  xy: 103, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+arrow_up
+  rotate: false
+  xy: 137, 1
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
