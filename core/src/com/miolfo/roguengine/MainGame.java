@@ -19,7 +19,7 @@ public class MainGame implements Screen {
     private static SpriteBatch mBatch;
     private static Player mPlayer;
     private static GameMap mCurrentMap;
-    private Texture mPlayer_t;
+
     private MapGdx mMapGdx;
     private MainGameView mMainGameView;
 
@@ -58,8 +58,8 @@ public class MainGame implements Screen {
     public void create() {
         mBatch = new SpriteBatch();
         mPlayer = new Player();
-        mPlayer_t = new Texture("graphics/player32.png");
-        mPlayer.SetTexture(mPlayer_t);
+        Texture player_t = new Texture("graphics/player32.png");
+        mPlayer.SetTexture(player_t);
         mMapGdx = new MapGdx();
         mCurrentMap = mMapGdx.GetWorldMap();
         mPlayer.Move(new Position(mMapGdx.GetMapSize() / 2, mMapGdx.GetMapSize() / 2));

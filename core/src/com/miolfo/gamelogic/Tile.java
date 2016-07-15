@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class Tile {
 
     private TileType mType;                             //Type of this tile
-    private ArrayList<Character> mContainedCharacters;  //ArrayList contains all the characters in this tile
 
     public Tile(TileType type){
         mType = type;
