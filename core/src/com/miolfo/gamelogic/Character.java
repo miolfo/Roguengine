@@ -40,6 +40,7 @@ public abstract class Character {
         mPosition = newPos;
     }
 
+    //TODO: Add default texture, and (possibly?) render function
     public void SetTexture(Texture texture){
         mTexture = texture;
     }
