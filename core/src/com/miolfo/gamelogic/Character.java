@@ -47,4 +47,6 @@ public abstract class Character {
     public Texture GetTexture(){
         return mTexture;
     }
+
+    public abstract void Attack(Position targetPos);
 }

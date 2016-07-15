@@ -1,8 +1,6 @@
 package com.miolfo.roguengine;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -128,7 +126,7 @@ public class MapGdx{
         //shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         for(int i = 0; i <= (xMax - xMin); i++){
             for(int j = 0; j < (yMax - yMin); j++){
-                Tile t = worldMap.GetTile(i+xMin,j+yMin);
+                Tile.TileType t = worldMap.GetTile(i+xMin,j+yMin);
                 switch(t){
                     case TILE_DESERT:
                         MainGame.SpriteBatchInstance().draw(desert_t, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
@@ -153,7 +151,7 @@ public class MapGdx{
 
     }
 
-    public Tile TileAtPos(Position pos){
+    public Tile.TileType TileAtPos(Position pos){
         return worldMap.GetTile(pos.X(), pos.Y());
     }
 

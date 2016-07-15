@@ -78,18 +78,18 @@ public class MapFactory {
         int mapSize = mGameMap.GetSize();
         for(int i = 0; i < mapSize; i++){
             for(int j = 0; j < mapSize; j++){
-                mGameMap.SetTile(i,j, Tile.TILE_GRASS);
+                mGameMap.SetTile(i,j, Tile.TileType.TILE_GRASS);
             }
         }
 
-        GeneratePolarAreas(true, Tile.TILE_SNOW);
-        GeneratePolarAreas(false, Tile.TILE_DESERT);
+        GeneratePolarAreas(true, Tile.TileType.TILE_SNOW);
+        GeneratePolarAreas(false, Tile.TileType.TILE_DESERT);
         Random r = new Random();
         for(int i = 0; i < mNumberOfForests; i++){
             int forestX = r.nextInt(mMapSize);
             int forestY = r.nextInt(mMapSize);
             //TODO random forest sizes
-            GenerateTilePatch(forestX, forestY, mAvgForestSize, 0.5f, Tile.TILE_FOREST);
+            GenerateTilePatch(forestX, forestY, mAvgForestSize, 0.5f, Tile.TileType.TILE_FOREST);
         }
         return mGameMap;
     }
@@ -97,9 +97,9 @@ public class MapFactory {
     /**
      * Function for generating the northern and southern radiuss of the map
      * @param north north or south radius
-     * @param tile tiles to apply to the radius
+     * @param tileType tiles to apply to the radius
      */
-    private void GeneratePolarAreas(boolean north, Tile tile){
+    private void GeneratePolarAreas(boolean north, Tile.TileType tileType){
         int mapSize = mGameMap.GetSize();
         int baseLine;
         if(north) baseLine = Math.round(mSnowCoverage * mapSize);
@@ -109,12 +109,12 @@ public class MapFactory {
             int randomInt = r.nextInt(baseLine);    //Random integer to create a ragged edge
             if(north){
                 for(int j = 0; j < baseLine + randomInt; j++){
-                    mGameMap.SetTile(i,j, Tile.TILE_SNOW);
+                    mGameMap.SetTile(i,j, Tile.TileType.TILE_SNOW);
                 }
             }
             else {
                 for (int j = mapSize - baseLine - randomInt; j < mapSize; j++) {
-                    mGameMap.SetTile(i, j, tile);
+                    mGameMap.SetTile(i, j, tileType);
                 }
             }
         }
@@ -126,9 +126,9 @@ public class MapFactory {
      * @param y y coordinate of radius center
      * @param radius radius of area
      * @param randomness how smooth is the area, 0..1
-     * @param tile tiles used to fill the radius
+     * @param tileType tiles used to fill the radius
      */
-    private void GenerateTilePatch(int x, int y, int radius, float randomness, Tile tile){
+    private void GenerateTilePatch(int x, int y, int radius, float randomness, Tile.TileType tileType){
         Random r = new Random();
         int rrx = 0, rry = 0;
         int rndAsInt = Math.round(radius * randomness);
@@ -142,14 +142,14 @@ public class MapFactory {
                 if((i-x) * (i-x) + (j-y)*(j-y) <= radius * radius){
                     int xs = x - (i - x);
                     int ys = y - (j - y);
-                    mGameMap.SetTile(i, j, tile);
-                    mGameMap.SetTile(i, ys, tile);
-                    mGameMap.SetTile(xs, j, tile);
-                    mGameMap.SetTile(xs, ys, tile);
+                    mGameMap.SetTile(i, j, tileType);
+                    mGameMap.SetTile(i, ys, tileType);
+                    mGameMap.SetTile(xs, j, tileType);
+                    mGameMap.SetTile(xs, ys, tileType);
                 } else if( randomness != 0){
                     float chance = r.nextFloat();
                     if(chance <= randomness){
-                        mGameMap.SetTile(i,j,tile);
+                        mGameMap.SetTile(i,j, tileType);
                     }
                 }
             }

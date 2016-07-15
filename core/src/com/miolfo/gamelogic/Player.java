@@ -27,6 +27,11 @@ public class Player extends Character {
         return mInventory;
     }
 
+    @Override
+    public void Attack(Position targetPos) {
+
+    }
+
     /**
      * Set the initial items of the player
      */
