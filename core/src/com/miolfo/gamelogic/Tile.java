@@ -1,8 +1,23 @@
 package com.miolfo.gamelogic;
+
+import java.util.ArrayList;
+
 /**
  * Created by Mikko Forsman on 30.5.2016.
  */
 public class Tile {
+
+    private TileType mType;                             //Type of this tile
+    private ArrayList<Character> mContainedCharacters;  //ArrayList contains all the characters in this tile
+
+    public Tile(TileType type){
+        mType = type;
+    }
+
+    public TileType GetType(){
+        return mType;
+    }
+
     public enum TileType {
         TILE_GRASS, TILE_FOREST, TILE_MOUNTAIN, TILE_WATER, TILE_SNOW, TILE_DESERT, TILE_UNDEFINED;
 

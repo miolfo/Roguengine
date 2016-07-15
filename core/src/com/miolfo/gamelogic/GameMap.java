@@ -5,7 +5,7 @@ package com.miolfo.gamelogic;
 public class GameMap {
     private static final int DEFAULT_MAP_SIZE = 20;
 
-    private static Tile.TileType[][] map;
+    private static Tile[][] map;
 
     private final int MAP_PADDING_LENGTH = 7;     //How long to make the string versions of tiles
 
@@ -21,11 +21,11 @@ public class GameMap {
     Private until width and height can be different
      */
     private GameMap(int mapWidth, int mapHeight){
-        map = new Tile.TileType[mapWidth][mapHeight];
+        map = new Tile[mapWidth][mapHeight];
         //Initialize with all-grass tiles
         for(int i = 0; i < map.length; i++){
             for(int j = 0; j < map.length; j++){
-                SetTile(i,j, Tile.TileType.TILE_GRASS);
+                SetTile(i,j, new Tile(Tile.TileType.TILE_GRASS));
             }
         }
     }
@@ -36,10 +36,10 @@ public class GameMap {
      * @param y y coordinate
      * @return tile at x,y
      */
-    public Tile.TileType GetTile(int x, int y){
+    public Tile GetTile(int x, int y){
         if(x < map.length && y < map.length && x >= 0 && y >= 0) {
             return map[y][x];
-        } else return Tile.TileType.TILE_UNDEFINED;
+        } else return new Tile(Tile.TileType.TILE_UNDEFINED);
     }
 
     /**
@@ -47,7 +47,7 @@ public class GameMap {
      * @param pos pos
      * @return tile at pos.x, pos.y
      */
-    public Tile.TileType GetTile(Position pos){
+    public Tile GetTile(Position pos){
         return GetTile(pos.X(), pos .Y());
     }
 
@@ -58,14 +58,14 @@ public class GameMap {
      * @param y y coordinate
      * @param t tile to be set at coordinates x,y
      */
-    public void SetTile(int x, int y, Tile.TileType t)
+    public void SetTile(int x, int y, Tile t)
     {
         if(x < map.length && y < map.length && x >= 0 && y >= 0) {
             map[y][x] = t;
         }
     }
 
-    public void SetTile(Position pos, Tile.TileType t){
+    public void SetTile(Position pos, Tile t){
         SetTile(pos.X(), pos.Y(), t);
     }
 

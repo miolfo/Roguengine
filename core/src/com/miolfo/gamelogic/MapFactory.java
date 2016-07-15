@@ -78,7 +78,7 @@ public class MapFactory {
         int mapSize = mGameMap.GetSize();
         for(int i = 0; i < mapSize; i++){
             for(int j = 0; j < mapSize; j++){
-                mGameMap.SetTile(i,j, Tile.TileType.TILE_GRASS);
+                mGameMap.SetTile(i,j, new Tile(Tile.TileType.TILE_GRASS));
             }
         }
 
@@ -109,12 +109,12 @@ public class MapFactory {
             int randomInt = r.nextInt(baseLine);    //Random integer to create a ragged edge
             if(north){
                 for(int j = 0; j < baseLine + randomInt; j++){
-                    mGameMap.SetTile(i,j, Tile.TileType.TILE_SNOW);
+                    mGameMap.SetTile(i,j, new Tile(Tile.TileType.TILE_SNOW));
                 }
             }
             else {
                 for (int j = mapSize - baseLine - randomInt; j < mapSize; j++) {
-                    mGameMap.SetTile(i, j, tileType);
+                    mGameMap.SetTile(i, j, new Tile(tileType));
                 }
             }
         }
@@ -142,14 +142,14 @@ public class MapFactory {
                 if((i-x) * (i-x) + (j-y)*(j-y) <= radius * radius){
                     int xs = x - (i - x);
                     int ys = y - (j - y);
-                    mGameMap.SetTile(i, j, tileType);
-                    mGameMap.SetTile(i, ys, tileType);
-                    mGameMap.SetTile(xs, j, tileType);
-                    mGameMap.SetTile(xs, ys, tileType);
+                    mGameMap.SetTile(i, j, new Tile(tileType));
+                    mGameMap.SetTile(i, ys, new Tile(tileType));
+                    mGameMap.SetTile(xs, j, new Tile(tileType));
+                    mGameMap.SetTile(xs, ys, new Tile(tileType));
                 } else if( randomness != 0){
                     float chance = r.nextFloat();
                     if(chance <= randomness){
-                        mGameMap.SetTile(i,j, tileType);
+                        mGameMap.SetTile(i,j, new Tile(tileType));
                     }
                 }
             }

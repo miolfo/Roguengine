@@ -126,7 +126,7 @@ public class MainGameButtons {
     };
 
     private boolean isMoveValid(Position newPos, GameMap usedMap){
-        return usedMap.GetTile(newPos.X(), newPos.Y()) != Tile.TileType.TILE_UNDEFINED;
+        return usedMap.GetTile(newPos.X(), newPos.Y()).GetType() != Tile.TileType.TILE_UNDEFINED;
     }
 
     private void createButtons(){

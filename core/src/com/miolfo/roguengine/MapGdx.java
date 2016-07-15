@@ -126,7 +126,7 @@ public class MapGdx{
         //shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         for(int i = 0; i <= (xMax - xMin); i++){
             for(int j = 0; j < (yMax - yMin); j++){
-                Tile.TileType t = worldMap.GetTile(i+xMin,j+yMin);
+                Tile.TileType t = worldMap.GetTile(i+xMin,j+yMin).GetType();
                 switch(t){
                     case TILE_DESERT:
                         MainGame.SpriteBatchInstance().draw(desert_t, i * tileWidthPx, j * tileHeightPx, tileWidthPx, tileHeightPx);
@@ -151,7 +151,7 @@ public class MapGdx{
 
     }
 
-    public Tile.TileType TileAtPos(Position pos){
+    public Tile TileAtPos(Position pos){
         return worldMap.GetTile(pos.X(), pos.Y());
     }
 
