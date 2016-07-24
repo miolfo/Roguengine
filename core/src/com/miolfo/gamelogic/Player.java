@@ -18,6 +18,8 @@ public class Player extends Character {
 
     public Player(){
         super("Player");
+        Texture player_t = new Texture("graphics/player32.png");
+        SetTexture(player_t);
         mInventory = new Inventory(25); //Initialize new inventory, 25 capacity during testing
         mPlayerInstance = this;
         setInitialInventory();

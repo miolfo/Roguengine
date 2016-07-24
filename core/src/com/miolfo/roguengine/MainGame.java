@@ -58,8 +58,6 @@ public class MainGame implements Screen {
     public void create() {
         mBatch = new SpriteBatch();
         mPlayer = new Player();
-        Texture player_t = new Texture("graphics/player32.png");
-        mPlayer.SetTexture(player_t);
         mMapGdx = new MapGdx();
         mCurrentMap = mMapGdx.GetWorldMap();
         mPlayer.Move(new Position(mMapGdx.GetMapSize() / 2, mMapGdx.GetMapSize() / 2));
