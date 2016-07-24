@@ -48,7 +48,7 @@ public class GameMap {
      * @return tile at pos.x, pos.y
      */
     public Tile GetTile(Position pos){
-        return GetTile(pos.X(), pos .Y());
+        return GetTile(pos.X(), pos.Y());
     }
 
 

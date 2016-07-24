@@ -60,9 +60,9 @@ public class MainGame implements Screen {
 
     public void create() {
         mBatch = new SpriteBatch();
-        mPlayer = new Player();
         mMapGdx = new MapGdx();
         mCurrentMap = mMapGdx.GetWorldMap();
+        mPlayer = new Player();
         mPlayer.Move(new Position(mMapGdx.GetMapSize() / 2, mMapGdx.GetMapSize() / 2));
         System.out.println("Player set to " + mPlayer.GetPosition());
         mMainGameView = new MainGameView();

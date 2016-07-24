@@ -1,14 +1,16 @@
 package com.miolfo.gamelogic;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.miolfo.roguengine.MainGame;
 import com.miolfo.roguengine.MapGdx;
+import com.miolfo.roguengine.UI.GameConsole;
 
 /**
  * Created by Mikko Forsman on 6/13/16.
  */
 public abstract class Character {
-    private Position mPosition;
+    private Position mPosition = new Position(-1,-1);
     private String mName;
     private Texture mTexture;
     private static MapGdx mMapGdxInstance;
@@ -20,7 +22,7 @@ public abstract class Character {
 
     public Character(String name, Position pos){
         mName = name;
-        mPosition = pos;
+        Move(pos);
     }
 
     public String GetName(){
@@ -32,18 +34,35 @@ public abstract class Character {
     }
 
     public void Move(Position.MoveDirection dir){
-        mPosition.Move(dir);
+        Move(dir, 1);
     }
 
     public void Move(Position.MoveDirection dir, int distance){
+        Position origPos = new Position(mPosition.X(), mPosition.Y());
         mPosition.Move(dir, distance);
+        GameMap currMap = MainGame.GetCurrentMap();
+        currMap.GetTile(origPos).RemoveCharacter();
+        //If the tile already contains a character, move back to original pos
+        if(currMap.GetTile(mPosition).HasCharacter()){
+            mPosition = origPos;
+            currMap.GetTile(origPos).AddCharacter(this);
+        } else{
+            currMap.GetTile(origPos).RemoveCharacter();
+            currMap.GetTile(mPosition).AddCharacter(this);
+        }
     }
 
     public void Move(Position newPos){
-        mPosition = newPos;
+        Position origPos = new Position(mPosition.X(), mPosition.Y());
+        GameMap currMap = MainGame.GetCurrentMap();
+        if(!currMap.GetTile(newPos).HasCharacter()) {
+            mPosition = newPos;
+            currMap.GetTile(mPosition).AddCharacter(this);
+            currMap.GetTile(origPos).RemoveCharacter();
+        }
     }
 
-    //TODO: Add default texture, and (possibly?) render function
+    //TODO: Add default texture
     public void SetTexture(Texture texture){
         mTexture = texture;
     }
