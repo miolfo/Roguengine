@@ -1,12 +1,14 @@
 package com.miolfo.roguengine;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.miolfo.gamelogic.GameMap;
-import com.miolfo.gamelogic.Player;
-import com.miolfo.gamelogic.Position;
+import com.miolfo.gamelogic.*;
+import com.miolfo.gamelogic.Character;
 import com.miolfo.roguengine.UI.MainGameView;
+
+import java.util.ArrayList;
 
 /**
  * Created by Mikko Forsman on 14.6.2016.
@@ -19,8 +21,9 @@ public class MainGame implements Screen {
     private static SpriteBatch mBatch;
     private static Player mPlayer;
     private static GameMap mCurrentMap;
+    private static ArrayList<Character> mNpcs = new ArrayList<Character>();
 
-    private MapGdx mMapGdx;
+    private static MapGdx mMapGdx;
     private MainGameView mMainGameView;
 
     public static SpriteBatch SpriteBatchInstance(){
@@ -63,6 +66,11 @@ public class MainGame implements Screen {
         mPlayer.Move(new Position(mMapGdx.GetMapSize() / 2, mMapGdx.GetMapSize() / 2));
         System.out.println("Player set to " + mPlayer.GetPosition());
         mMainGameView = new MainGameView();
+        //Create a monster close by the player, for debugging purposes
+        //TODO: Another class for creating the monsters
+        Monster testMonster = new Monster("Ogre", new Position(45,45));
+        testMonster.SetTexture(new Texture(Gdx.files.internal("graphics/monster32.png")));
+        mNpcs.add(testMonster);
     }
 
     @Override
@@ -74,7 +82,10 @@ public class MainGame implements Screen {
     public void render(float v) {
         updateGameState();
         mMapGdx.renderAroundPos(mPlayer.GetPosition());
-        renderPlayer();
+        mPlayer.render();
+        for (Character c: mNpcs) {
+            c.render();
+        }
         mMainGameView.render();
     }
 
@@ -88,18 +99,12 @@ public class MainGame implements Screen {
         return mCurrentMap;
     }
 
-    private void renderPlayer(){
-        mBatch.begin();
-        Position playerInPx = mMapGdx.PositionToScreenCoordinates(mPlayer.GetPosition());
-        mBatch.draw(mPlayer.GetTexture(),
-                playerInPx.X(),
-                playerInPx.Y(),
-                mMapGdx.GetTileWidthPixels(),
-                mMapGdx.GetTileHeightPixels());
-        mBatch.end();
-    }
+    //Public function for MapGdx since some MapGdx information
+    //is required in rendering
+    public static MapGdx GetMapGenerator(){ return mMapGdx;}
 
     private void updateGameState(){
         //TODO: Game logic here?
     }
+
 }
