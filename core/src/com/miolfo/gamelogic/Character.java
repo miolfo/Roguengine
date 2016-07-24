@@ -1,10 +1,8 @@
 package com.miolfo.gamelogic;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.miolfo.roguengine.MainGame;
 import com.miolfo.roguengine.MapGdx;
-import com.miolfo.roguengine.UI.GameConsole;
 
 /**
  * Created by Mikko Forsman on 6/13/16.
@@ -37,11 +35,17 @@ public abstract class Character {
         Move(dir, 1);
     }
 
+    /**
+     * Move a number of positions towards a direction. Also handle
+     * adding and removing characters contained in a Tile
+     * @param dir Direction of movement
+     * @param distance Distance of movement
+     */
     public void Move(Position.MoveDirection dir, int distance){
         Position origPos = new Position(mPosition.X(), mPosition.Y());
         mPosition.Move(dir, distance);
         GameMap currMap = MainGame.GetCurrentMap();
-        currMap.GetTile(origPos).RemoveCharacter();
+
         //If the tile already contains a character, move back to original pos
         if(currMap.GetTile(mPosition).HasCharacter()){
             mPosition = origPos;
@@ -52,6 +56,11 @@ public abstract class Character {
         }
     }
 
+    /**
+     * Set Character to the defined position. Also handle adding and removing
+     * of characters in a Tile
+     * @param newPos New position
+     */
     public void Move(Position newPos){
         Position origPos = new Position(mPosition.X(), mPosition.Y());
         GameMap currMap = MainGame.GetCurrentMap();

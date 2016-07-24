@@ -1,7 +1,7 @@
 package com.miolfo.gamelogic;
 
 /**
- * Created by forge on 6/13/16.
+ * Created by Mikko Forsman on 6/13/16.
  */
 public class Position {
     private int x;

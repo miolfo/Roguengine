@@ -91,6 +91,7 @@ public class MainGameButtons {
                     moveDirection = Position.MoveDirection.EAST;
                 }
                 //If the move was invalid, return back to original position
+                //TODO: Move the Character class, and printing to Player class
                 if (!isMoveValid(MainGame.GetPlayer().GetPosition(), MainGame.GetCurrentMap())) {
                     MainGame.GetPlayer().Move(oldPlayerPos);
                     GameConsole.WriteLine("Can't move outside of map!");
